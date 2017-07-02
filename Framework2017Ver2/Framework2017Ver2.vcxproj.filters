@@ -1,6 +1,33 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Keyboard.cpp" />
+    <ClCompile Include="Model.cpp" />
+    <ClCompile Include="Mouse.cpp" />
+    <ClCompile Include="Server.cpp" />
+    <ClCompile Include="Sound.cpp" />
+    <ClCompile Include="Task.cpp" />
+    <ClCompile Include="WinMain.cpp" />
+    <ClCompile Include="Application.cpp" />
+    <ClCompile Include="Binary.cpp" />
+    <ClCompile Include="Client.cpp" />
+    <ClCompile Include="Device.cpp" />
+    <ClCompile Include="Drawer.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Keyboard.h" />
+    <ClInclude Include="mathmatics.h" />
+    <ClInclude Include="Model.h" />
+    <ClInclude Include="Mouse.h" />
+    <ClInclude Include="Network.h" />
+    <ClInclude Include="Server.h" />
+    <ClInclude Include="smart_ptr.h" />
+    <ClInclude Include="Sound.h" />
+    <ClInclude Include="Task.h" />
+    <ClInclude Include="Application.h" />
+    <ClInclude Include="Binary.h" />
+    <ClInclude Include="Client.h" />
+    <ClInclude Include="Device.h" />
+    <ClInclude Include="Drawer.h" />
   </ItemGroup>
 </Project>
