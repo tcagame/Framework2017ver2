@@ -96,6 +96,13 @@ public:
 public:
 	void initialize( );
 	void update( );
+	void drawModelMDL( const ModelMDL& model_mdl );
+	void drawModelSelf( const ModelSelf& model_self );
+	void drawModelMV1( const ModelMV1& model );
+	void drawSprite( const Sprite& sprite );
+	void drawCircle( const Circle& circle );
+	void drawBillboard( const Billboard& billboard );
+	void drawEffect( const Effect& effect );
 	void loadMV1Model( int motion, const char* filename );
 	void loadMDLModel( int type, const char* filename, const char* texture_filename, Matrix matrix = Matrix( ) );
 	void loadGraph( int res, const char* filename );
@@ -106,40 +113,16 @@ public:
 	void unloadGraph( int res );
 	void unloadAllGraph( );
 	double getEndAnimTime( int res );
-	void setSprite( const Sprite& sprite );
-	void setModelMV1( const ModelMV1& model );
-	void setModelMDL( const ModelMDL& model_mdl );
-	void setModelSelf( const ModelSelf& model_self );
-	void setBillboard( const Billboard& billboard );
-	void setEffectPos( const Effect& effect );
-	void setEffect( Effect& effect );
-	void setCircle( const Circle& circle );
 	void drawString( int x, int y, const char* string, ... );
 	void drawLine( int x1, int y1, int x2, int y2 );
 	void drawLine( const Vector& pos1, const Vector& pos2 );
 	void setCameraUp( const Vector& up );
 	void setCamera( const Vector& pos, const Vector& target );
 	void resetFPS( );
-private:
-	void drawModelMV1( );
-	void drawModelMDL( );
-	void drawModelSelf( );
-	void drawSprite( );
-	void drawBillboard( );
-	void drawEffect( );
-	void drawCircle( );
 	void flip( );
 
 private:
 	const char* _directory;
-
-	static const int MODEL_MV1_NUM = 10000;
-	std::array< ModelMV1, MODEL_MV1_NUM > _model_mv1; 
-	int _model_mv1_idx;
-
-	static const int SPRITE_NUM = 10000;
-	std::array< Sprite, SPRITE_NUM > _sprite; 
-	int _sprite_idx;
 
 	static const int MODEL_ID_NUM = 1000;
 	std::array< int, MODEL_ID_NUM > _mv1_id;
@@ -147,27 +130,11 @@ private:
 	static const int GRAPHIC_ID_NUM = 1000;
 	std::array< int, GRAPHIC_ID_NUM > _graphic_id;
 
-	static const int BILLBOARD_NUM = 1000;
-	std::array< Billboard, BILLBOARD_NUM > _billboard;
-	int _billboard_idx;
-
-	static const int MODEL_MDL_NUM = 5000;
-	std::array< ModelMDL, MODEL_MDL_NUM > _model_mdl;
-	int _model_mdl_idx;
-	
-	static const int MODEL_SELF_NUM = 200;
-	std::array< ModelSelf, MODEL_SELF_NUM > _model_self;
-	int _model_self_idx;
-
 	static const int MODEL_NUM = 60;
 	std::array< ModelPtr, MODEL_NUM > _model;
 	
 	static const int EFFECT_ID_NUM = 1000;
 	std::array< int, EFFECT_ID_NUM > _effect_id;
-
-	static const int CIRCLE_NUM = 1000;
-	std::array< Circle, CIRCLE_NUM > _circle;
-	int _circle_idx;
 
 	int _refresh_count;
 	int _start_time;
