@@ -1,2 +1,8 @@
 Framework2017Ver2/Debug/
 Framework2017Ver2/x64/
+*.db
+Framework2017Ver2/Test/x64/
+Framework2017Ver2/Test/Debug/
+*.opendb
+Framework2017Ver2/ModelMaker/x64/
+Framework2017Ver2/ModelMaker/Debug/

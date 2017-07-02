@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Framework2017Ver2", "Framew
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Test", "Test\Test.vcxproj", "{C975A993-0DEF-451F-8DA7-23B5DCDF8F23}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ModelMaker", "ModelMaker\ModelMaker.vcxproj", "{4788C4DB-CC11-4B79-AB4B-B3220699EF0F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -31,6 +33,14 @@ Global
 		{C975A993-0DEF-451F-8DA7-23B5DCDF8F23}.Release|x64.Build.0 = Release|x64
 		{C975A993-0DEF-451F-8DA7-23B5DCDF8F23}.Release|x86.ActiveCfg = Release|Win32
 		{C975A993-0DEF-451F-8DA7-23B5DCDF8F23}.Release|x86.Build.0 = Release|Win32
+		{4788C4DB-CC11-4B79-AB4B-B3220699EF0F}.Debug|x64.ActiveCfg = Debug|x64
+		{4788C4DB-CC11-4B79-AB4B-B3220699EF0F}.Debug|x64.Build.0 = Debug|x64
+		{4788C4DB-CC11-4B79-AB4B-B3220699EF0F}.Debug|x86.ActiveCfg = Debug|Win32
+		{4788C4DB-CC11-4B79-AB4B-B3220699EF0F}.Debug|x86.Build.0 = Debug|Win32
+		{4788C4DB-CC11-4B79-AB4B-B3220699EF0F}.Release|x64.ActiveCfg = Release|x64
+		{4788C4DB-CC11-4B79-AB4B-B3220699EF0F}.Release|x64.Build.0 = Release|x64
+		{4788C4DB-CC11-4B79-AB4B-B3220699EF0F}.Release|x86.ActiveCfg = Release|Win32
+		{4788C4DB-CC11-4B79-AB4B-B3220699EF0F}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
