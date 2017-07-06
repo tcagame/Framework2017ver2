@@ -35,18 +35,7 @@ sx2( sx2_ ),
 sy2( sy2_ ) {
 }
 
-Drawer::ModelMV1::ModelMV1( ) :
-mesh( -1 ),
-anime( -1 ),
-time( 0 ){
-}
 
-Drawer::ModelMV1::ModelMV1( Matrix matrix_, int mesh_, int anime_, double time_ ) :
-matrix( matrix_ ),
-mesh( mesh_ ),
-anime( anime_ ),
-time( time_ ) {
-}
 
 
 Drawer::Sprite::Sprite( ) :
@@ -121,10 +110,6 @@ void Drawer::initialize( ) {
 		_graphic_id[ i ] = -1;
 	}
 
-	for ( int i = 0; i < MODEL_ID_NUM; i++ ) {
-		_mv1_id[ i ] = -1;
-	}
-
 	_refresh_count = 0;
 	_fps = FPS;
 	_start_time = 0;
@@ -134,30 +119,6 @@ void Drawer::initialize( ) {
 }
 
 void Drawer::update( ) {
-}
-
-void Drawer::drawModelMV1( const ModelMV1& model ) {
-	int mesh = _mv1_id[ model.mesh ];
-	int anim = _mv1_id[ model.anime ];
-	Matrix mat = model.matrix;
-	MATRIX matrix = MGetIdent( );
-	for( int j = 0; j < 3 * 3; j++ ) {
-		int n = j % 3;
-		int m = j / 3;
-		matrix.m[ m ][ n ] = ( float )mat.data[ n ][ m ];
-	}
-	for ( int j = 0; j < 4; j++ ) {
-		matrix.m[ j ][ 3 ] = ( float )mat.data[ j ][ 3 ];
-		matrix.m[ 3 ][ j ] = ( float )mat.data[ 3 ][ j ];
-	}
-
-	MV1SetMatrix( mesh, matrix );
-	//アニメーション設定
-	int idx = MV1AttachAnim( mesh, 0, anim, TRUE );
-	MV1SetAttachAnimTime( mesh, idx, ( float )model.time );
-	// ３Ｄモデルの描画
-	MV1DrawModel( mesh );
-	MV1DetachAnim( mesh, idx );
 }
 
 void Drawer::drawSprite( const Sprite& sprite ) {
@@ -219,20 +180,6 @@ void Drawer::drawEffect( const Effect& effect ) {
 		// Effekseerにより再生中のエフェクトを描画する。
 		DrawEffekseer3D( );
 #	endif
-}
-
-void Drawer::loadMV1Model( int motion, const char* filename ) {
-	std::string path = _directory;
-	path += "/";
-	path += filename;
-	assert( motion < MODEL_ID_NUM );
-	int& id = _mv1_id[ motion ];
-	id = MV1LoadModel( path.c_str( ) );
-	assert( id > 0 );
-	int num = MV1GetMaterialNum( id ) ;
-	for ( int i = 0; i < num; i++ ) {
-		MV1SetMaterialEmiColor( id, i, GetColorF( 1.0f, 1.0f, 1.0f, 1.0f ) );
-	}
 }
 
 void Drawer::loadEffect( int id, const char* filename ) {
@@ -355,10 +302,6 @@ void Drawer::flip( ) {
 
 	ScreenFlip( );
 	ClearDrawScreen( );
-}
-
-double Drawer::getEndAnimTime( int anime ) {
-	return MV1GetAnimTotalTime( _mv1_id[ anime ], 0 );
 }
 
 void Drawer::drawLine( int x1, int y1, int x2, int y2 ) {

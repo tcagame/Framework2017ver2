@@ -26,6 +26,7 @@
     <ClCompile Include="Drawer.cpp" />
     <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="ModelMDL.cpp" />
+    <ClCompile Include="ModelMV1.cpp" />
     <ClCompile Include="Mouse.cpp" />
     <ClCompile Include="Server.cpp" />
     <ClCompile Include="Sound.cpp" />
@@ -41,6 +42,7 @@
     <ClInclude Include="Keyboard.h" />
     <ClInclude Include="mathmatics.h" />
     <ClInclude Include="ModelMDL.h" />
+    <ClInclude Include="ModelMV1.h" />
     <ClInclude Include="Mouse.h" />
     <ClInclude Include="Network.h" />
     <ClInclude Include="Server.h" />

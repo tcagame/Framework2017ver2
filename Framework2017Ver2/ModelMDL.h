@@ -29,7 +29,7 @@ public:
 public:
 	void draw( ) const;
 	void draw( int texture ) const;
-	void multiply( Matrix matrix );
+	void multiply( const Matrix& matrix );
 	void alloc( int polygon_num );
 	void setPolygonNum( int num );
 	int  getPolygonNum( ) const;

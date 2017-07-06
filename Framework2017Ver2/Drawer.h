@@ -42,23 +42,6 @@ public:
 		Sprite( Transform trans_, int res_, BLEND blend_ = BLEND_NONE, double ratio_ = 1.0 );
 	};
 
-	struct ModelMV1 {
-		Matrix matrix;
-		int mesh;
-		int anime;
-		double time;
-		bool dx_mat;
-		ModelMV1( );
-		ModelMV1( Matrix matrix_, int mesh_, int anime_ = -1, double time_ = 0 );
-	};
-
-	struct ModelSelf {
-		ModelPtr model;
-		int graph;
-		bool add;
-		bool z_buffer;
-	};
-
 	struct Billboard {
 		Vector pos;
 		double size;
@@ -89,12 +72,10 @@ public:
 public:
 	void initialize( );
 	void update( );
-	void drawModelMV1( const ModelMV1& model );
 	void drawSprite( const Sprite& sprite );
 	void drawCircle( const Circle& circle );
 	void drawBillboard( const Billboard& billboard );
 	void drawEffect( const Effect& effect );
-	void loadMV1Model( int motion, const char* filename );
 	void loadGraph( int res, const char* filename );
 	void loadEffect( int id, const char* filename );
 	void createGraph( int res, int width, int height );
@@ -102,7 +83,6 @@ public:
 	void clearToGraph( int res );
 	void unloadGraph( int res );
 	void unloadAllGraph( );
-	double getEndAnimTime( int res );
 	void drawString( int x, int y, const char* string, ... );
 	void drawLine( int x1, int y1, int x2, int y2 );
 	void drawLine( const Vector& pos1, const Vector& pos2 );
@@ -113,9 +93,6 @@ public:
 
 private:
 	const char* _directory;
-
-	static const int MODEL_ID_NUM = 1000;
-	std::array< int, MODEL_ID_NUM > _mv1_id;
 	
 	static const int GRAPHIC_ID_NUM = 1000;
 	std::array< int, GRAPHIC_ID_NUM > _graphic_id;

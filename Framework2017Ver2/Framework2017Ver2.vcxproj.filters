@@ -13,6 +13,7 @@
     <ClCompile Include="Device.cpp" />
     <ClCompile Include="Drawer.cpp" />
     <ClCompile Include="ModelMDL.cpp" />
+    <ClCompile Include="ModelMV1.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Keyboard.h" />
@@ -29,5 +30,6 @@
     <ClInclude Include="Device.h" />
     <ClInclude Include="Drawer.h" />
     <ClInclude Include="ModelMDL.h" />
+    <ClInclude Include="ModelMV1.h" />
   </ItemGroup>
 </Project>

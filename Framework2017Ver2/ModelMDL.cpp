@@ -95,7 +95,7 @@ void ModelMDL::save( std::string filename ) {
 	fclose( fp );
 }
 
-void ModelMDL::multiply( Matrix matrix ) {
+void ModelMDL::multiply( const Matrix& matrix ) {
 	int count = ( int )_impl->_polygon_num * 3;
 	for ( int i = 0; i < count; i++ ) {
 		Vector pos(
@@ -117,11 +117,13 @@ void ModelMDL::mergeModel( ModelMDLConstPtr model ) {
 	VERTEX3D* vertex = new VERTEX3D[ sizeof( VERTEX3D ) * polygon_num * 3 ];
 
 	// this のモデルをコピー
-	for ( int i = 0; i < ( int )_impl->_polygon_num * 3; i++ ) {
+	int base_count = _impl->_polygon_num * 3;
+	for ( int i = 0; i < base_count; i++ ) {
 		vertex[ i ] = _impl->_vertex[ i ];
 	}
 	// modelのモデルをコピー
-	for ( int i = 0; i < ( int )merge_impl->_polygon_num * 3; i++ ) {
+	int marge_count = merge_impl->_polygon_num * 3;
+	for ( int i = 0; i < marge_count; i++ ) {
 		int idx = _impl->_polygon_num * 3 + i;
 		vertex[ idx ] = merge_impl->_vertex[ i ];
 	}
