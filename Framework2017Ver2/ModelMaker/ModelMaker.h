@@ -5,7 +5,7 @@
 #include <string>
 
 PTR( ModelMaker );
-PTR( Model );
+PTR( ModelMDL );
 
 class ModelMaker : public Task {
 public:
@@ -32,7 +32,7 @@ private:
 	void drawCoordinateLine( ) const;
 private:
 	STATE _state;
-	ModelPtr _model;
+	ModelMDLPtr _model;
 	int _texture;
 };
 

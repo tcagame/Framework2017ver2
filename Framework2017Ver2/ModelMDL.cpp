@@ -1,4 +1,4 @@
-#include "Model.h"
+#include "ModelMDL.h"
 #include "dxlib.h"
 
 class ModelImpl {
@@ -7,7 +7,7 @@ public:
 	unsigned int _polygon_num;
 };
 
-Model::Model( ) {
+ModelMDL::ModelMDL( ) {
 	_impl = ModelImplPtr( new ModelImpl );
 
 	_impl->_vertex = NULL;
@@ -15,13 +15,13 @@ Model::Model( ) {
 	_texture_handle = -1;
 }
 
-Model::~Model( ) {
+ModelMDL::~ModelMDL( ) {
 	if ( _impl->_vertex ) {
 		delete [] _impl->_vertex;
 	}
 }
 
-void Model::alloc( int polygon_num ) {
+void ModelMDL::alloc( int polygon_num ) {
 	_impl->_polygon_num = polygon_num;
 	if ( _impl->_vertex != NULL ) {
 		delete [] _impl->_vertex;
@@ -29,23 +29,19 @@ void Model::alloc( int polygon_num ) {
 	_impl->_vertex = new VERTEX3D[ polygon_num * 3 ];
 }
 
-void Model::setPolygonNum( int num ) {
+void ModelMDL::setPolygonNum( int num ) {
 	_impl->_polygon_num = num;
 }
 
-void Model::draw( int texture, bool trans ) const {
-
-	int check = DrawPolygon3D( _impl->_vertex, _impl->_polygon_num, texture, trans ? TRUE : FALSE );
-		
+void ModelMDL::draw( ) const {
+	int check = DrawPolygon3D( _impl->_vertex, _impl->_polygon_num, _texture_handle, _trans ? TRUE : FALSE );
 }
 
-
-void Model::draw( bool trans ) const {
-	int check = DrawPolygon3D( _impl->_vertex, _impl->_polygon_num, _texture_handle, trans ? TRUE : FALSE );		
+void ModelMDL::draw( int texture ) const {
+	int check = DrawPolygon3D( _impl->_vertex, _impl->_polygon_num, texture, _trans ? TRUE : FALSE );
 }
 
-
-void Model::set( int n, VERTEX vertex ) {
+void ModelMDL::set( int n, VERTEX vertex ) {
 
 	VERTEX3D vtx;
 	vtx.pos = VGet( ( float )vertex.pos.x, ( float )vertex.pos.y, ( float )vertex.pos.z );
@@ -60,7 +56,7 @@ void Model::set( int n, VERTEX vertex ) {
 	_impl->_vertex[ n ] = vtx;
 }
 
-Model::VERTEX Model::getVERTEX( int idx ){
+ModelMDL::VERTEX ModelMDL::getVERTEX( int idx ){
 	VERTEX vertex;
 	vertex.pos = Vector( _impl->_vertex[ idx ].pos.x, _impl->_vertex[ idx ].pos.y, _impl->_vertex[ idx ].pos.z );
 	vertex.u = _impl->_vertex[ idx ].u;
@@ -69,7 +65,7 @@ Model::VERTEX Model::getVERTEX( int idx ){
 }
 
 
-bool Model::load( std::string filename ) {
+bool ModelMDL::load( std::string filename ) {
 	int fh = FileRead_open( filename.c_str( ) );
 	if ( fh <= 0 ) {
 		return false;
@@ -81,41 +77,12 @@ bool Model::load( std::string filename ) {
 	alloc( polygon_num );
 
 	FileRead_read( _impl->_vertex, sizeof( DxLib::VERTEX3D ) * ( polygon_num * 3 ), fh );
-	_origin_pos.x = _impl->_vertex[ 0 ].pos.x;
-	_origin_pos.y = _impl->_vertex[ 0 ].pos.y;
-	_origin_pos.z = _impl->_vertex[ 0 ].pos.z;
 
 	FileRead_close( fh );
 	return true;
 }
 
-void Model::translate( Vector move ) {
-	for ( int i = 0; i < ( int )_impl->_polygon_num * 3; i++ ) {
-		_impl->_vertex[ i ].pos.x += ( float )move.x;
-		_impl->_vertex[ i ].pos.y += ( float )move.y;
-		_impl->_vertex[ i ].pos.z += ( float )move.z;
-	}
-}
-
-void Model::setPos( Vector pos ) {
-	VECTOR diff;
-	diff.x = _impl->_vertex[ 0 ].pos.x - ( float )_origin_pos.x;
-	diff.y = _impl->_vertex[ 0 ].pos.y - ( float )_origin_pos.y;
-	diff.z = _impl->_vertex[ 0 ].pos.z - ( float )_origin_pos.z;
-	
-	VECTOR move;
-	move.x = ( float )pos.x - diff.x;
-	move.y = ( float )pos.y - diff.y;
-	move.z = ( float )pos.z - diff.z;
-
-	for ( int i = 0; i < ( int )_impl->_polygon_num * 3; i++ ) {
-		_impl->_vertex[ i ].pos.x += move.x;
-		_impl->_vertex[ i ].pos.y += move.y;
-		_impl->_vertex[ i ].pos.z += move.z;
-	}
-}
-
-void Model::save( std::string filename ) {
+void ModelMDL::save( std::string filename ) {
 	FILE *fp;
 	errno_t err = fopen_s( &fp, filename.c_str( ), "wb" );
 	if ( err != 0 ) {
@@ -128,7 +95,7 @@ void Model::save( std::string filename ) {
 	fclose( fp );
 }
 
-void Model::multiply( Matrix matrix ) {
+void ModelMDL::multiply( Matrix matrix ) {
 	int count = ( int )_impl->_polygon_num * 3;
 	for ( int i = 0; i < count; i++ ) {
 		Vector pos(
@@ -138,12 +105,9 @@ void Model::multiply( Matrix matrix ) {
 		pos = matrix.multiply( pos );
 		_impl->_vertex[ i ].pos = VGet( ( float )pos.x, ( float )pos.y, ( float )pos.z );
 	}
-	_origin_pos.x = _impl->_vertex[ 0 ].pos.x;
-	_origin_pos.y = _impl->_vertex[ 0 ].pos.y;
-	_origin_pos.z = _impl->_vertex[ 0 ].pos.z;
 }
 
-void Model::mergeModel( ModelConstPtr model ) {
+void ModelMDL::mergeModel( ModelMDLConstPtr model ) {
 	if ( model == NULL ) {
 		return;
 	}
@@ -169,40 +133,36 @@ void Model::mergeModel( ModelConstPtr model ) {
 	_impl->_polygon_num = polygon_num;
 }
 
-ModelImplConstPtr Model::getModelImpl( ) const {
+ModelImplConstPtr ModelMDL::getModelImpl( ) const {
 	return _impl;
 }
 
-Vector Model::getPos( ) const {
-	Vector pos;
-	pos.x = _impl->_vertex[ 0 ].pos.x - _origin_pos.x;
-	pos.y = _impl->_vertex[ 0 ].pos.y - _origin_pos.y;
-	pos.z = _impl->_vertex[ 0 ].pos.z - _origin_pos.z;
-	return pos;
-}
-
-Vector Model::getPoint( int idx ) const {
+Vector ModelMDL::getPoint( int idx ) const {
 	return Vector(
 		_impl->_vertex[ idx ].pos.x,
 		_impl->_vertex[ idx ].pos.y,
 		_impl->_vertex[ idx ].pos.z );
 }
 
-int Model::getPolygonNum( ) const {
+int ModelMDL::getPolygonNum( ) const {
 	return _impl->_polygon_num;
 }
 
-int Model::getTextureHandle( const char* filename ) {
+int ModelMDL::getTextureHandle( const char* filename ) {
 	return LoadGraph( filename );
 }
 
-void Model::reset( ) {
+void ModelMDL::reset( ) {
 	_impl = ModelImplPtr( new ModelImpl );
 
 	_impl->_vertex = NULL;
 	_impl->_polygon_num = 0;
 }
 
-void Model::setTexture( const char* filename ) {
+void ModelMDL::setTexture( const char* filename ) {
 	_texture_handle = getTextureHandle( filename );
+}
+
+void ModelMDL::setTrans( bool trans ) {
+	_trans = trans;
 }

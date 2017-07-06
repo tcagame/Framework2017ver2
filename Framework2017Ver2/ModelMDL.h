@@ -4,13 +4,13 @@
 #include "mathmatics.h"
 #include <string>
 
-PTR( Model );
+PTR( ModelMDL );
 PTR( ModelImpl );
 
-class Model {
+class ModelMDL {
 public:
-	Model( );
-	virtual ~Model( );
+	ModelMDL( );
+	virtual ~ModelMDL( );
 public:
 	struct VERTEX {
 		Vector pos;
@@ -27,8 +27,8 @@ public:
 		}
 	};
 public:
-	void draw( bool trans = false ) const;
-	void draw( int texture, bool trans = false ) const;
+	void draw( ) const;
+	void draw( int texture ) const;
 	void multiply( Matrix matrix );
 	void alloc( int polygon_num );
 	void setPolygonNum( int num );
@@ -36,19 +36,17 @@ public:
 	void set( int n, VERTEX vertex ); // n * 3
 	bool load( std::string filename );
 	void save( std::string filename );
-	void mergeModel( ModelConstPtr model );
-	void translate( Vector move );
-	void setPos( Vector pos );
+	void mergeModel( ModelMDLConstPtr model );
+	void setTrans( bool trans );
 	void reset( );
 	void setTexture( const char* texture_path );
 	VERTEX getVERTEX( int idx );
 	Vector getPoint( int idx ) const;
-	Vector getPos( ) const;
 	ModelImplConstPtr getModelImpl( ) const;
 	int getTextureHandle( const char* filename );
 private:
 	ModelImplPtr _impl;
-	Vector _origin_pos;
 	int _texture_handle;
+	bool _trans;
 };
 

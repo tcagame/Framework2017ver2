@@ -2,7 +2,7 @@
 #include "Application.h"
 #include "Keyboard.h"
 #include "Parser.h"
-#include "Model.h"
+#include "ModelMDL.h"
 #include "DxLib.h"
 
 const int INPUT_X = 100;
@@ -74,7 +74,7 @@ void ModelMaker::load( ) {
 	}
 	
 	if ( filename.find( ".mdl" ) != std::string::npos ) {
-		_model = ModelPtr( new Model );
+		_model = ModelMDLPtr( new ModelMDL );
 		if ( !_model->load( filename ) ) {
 			_model.reset( );
 		}

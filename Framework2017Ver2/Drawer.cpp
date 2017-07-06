@@ -1,6 +1,5 @@
 #include "Drawer.h"
 #include "Application.h"
-#include "Model.h"
 #include "DxLib.h"
 
 #if EFFECKSEER
@@ -47,16 +46,6 @@ matrix( matrix_ ),
 mesh( mesh_ ),
 anime( anime_ ),
 time( time_ ) {
-}
-
-Drawer::ModelMDL::ModelMDL( ) :
-type( -1 ){
-}
-
-Drawer::ModelMDL::ModelMDL( Vector pos_, int type_ ) :
-pos( pos_ ),
-type( type_ ) {
-
 }
 
 
@@ -145,31 +134,6 @@ void Drawer::initialize( ) {
 }
 
 void Drawer::update( ) {
-}
-
-void Drawer::drawModelMDL( const ModelMDL& model_mdl ) {
-	int type = model_mdl.type;
-	Vector pos = model_mdl.pos;
-	_model[ type ]->setPos( pos );
-	_model[ type ]->draw( );
-}
-
-void Drawer::drawModelSelf( const ModelSelf& model_self ) {
-	if ( !model_self.z_buffer ) {
-		SetWriteZBuffer3D( FALSE );
-	}
-	if ( model_self.add ) {
-		SetDrawBlendMode( DX_BLENDMODE_ADD, 255 );
-	}
-	
-	model_self.model->draw( _graphic_id[ model_self.graph ], true );
-	
-	if ( model_self.add ) {
-		SetDrawBlendMode( DX_BLENDMODE_NOBLEND, 0 );
-	}
-	if ( !model_self.z_buffer ) {
-		SetWriteZBuffer3D( TRUE );
-	}
 }
 
 void Drawer::drawModelMV1( const ModelMV1& model ) {
@@ -269,20 +233,6 @@ void Drawer::loadMV1Model( int motion, const char* filename ) {
 	for ( int i = 0; i < num; i++ ) {
 		MV1SetMaterialEmiColor( id, i, GetColorF( 1.0f, 1.0f, 1.0f, 1.0f ) );
 	}
-}
-
-void Drawer::loadMDLModel( int type, const char* model_filename, const char* texture_filename, Matrix matrix ) {
-	assert( type < MODEL_NUM );
-	std::string path = _directory;
-	path += "/";
-	std::string tex_path = path;
-	path += model_filename;
-	tex_path += texture_filename;
-	
-	_model[ type ] = ModelPtr( new Model );
-	_model[ type ]->load( path.c_str( ) );
-	_model[ type ]->setTexture( tex_path.c_str( ) );
-	_model[ type ]->multiply( matrix );
 }
 
 void Drawer::loadEffect( int id, const char* filename ) {

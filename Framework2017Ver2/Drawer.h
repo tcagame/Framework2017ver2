@@ -52,13 +52,6 @@ public:
 		ModelMV1( Matrix matrix_, int mesh_, int anime_ = -1, double time_ = 0 );
 	};
 
-	struct ModelMDL {
-		Vector pos;
-		int type;
-		ModelMDL( );
-		ModelMDL( Vector pos_, int type_ );
-	};
-
 	struct ModelSelf {
 		ModelPtr model;
 		int graph;
@@ -96,15 +89,12 @@ public:
 public:
 	void initialize( );
 	void update( );
-	void drawModelMDL( const ModelMDL& model_mdl );
-	void drawModelSelf( const ModelSelf& model_self );
 	void drawModelMV1( const ModelMV1& model );
 	void drawSprite( const Sprite& sprite );
 	void drawCircle( const Circle& circle );
 	void drawBillboard( const Billboard& billboard );
 	void drawEffect( const Effect& effect );
 	void loadMV1Model( int motion, const char* filename );
-	void loadMDLModel( int type, const char* filename, const char* texture_filename, Matrix matrix = Matrix( ) );
 	void loadGraph( int res, const char* filename );
 	void loadEffect( int id, const char* filename );
 	void createGraph( int res, int width, int height );
@@ -129,9 +119,6 @@ private:
 	
 	static const int GRAPHIC_ID_NUM = 1000;
 	std::array< int, GRAPHIC_ID_NUM > _graphic_id;
-
-	static const int MODEL_NUM = 60;
-	std::array< ModelPtr, MODEL_NUM > _model;
 	
 	static const int EFFECT_ID_NUM = 1000;
 	std::array< int, EFFECT_ID_NUM > _effect_id;

@@ -3,7 +3,6 @@
 #include "Mouse.h"
 #include "Keyboard.h"
 #include "ModelMaker.h"
-#include "Model.h"
 #include "Drawer.h"
 
 const Vector START_TO_POS = Vector( 0, 50, 50 );

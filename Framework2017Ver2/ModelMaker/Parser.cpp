@@ -1,5 +1,5 @@
 #include "Parser.h"
-#include "Model.h"
+#include "ModelMDL.h"
 #include "DxLib.h"
 #include <vector>
 #include <array>
@@ -12,7 +12,7 @@ Parser::Parser( ) {
 Parser::~Parser( ) {
 }
 
-ModelPtr Parser::makeModel( std::string filename ) {
+ModelMDLPtr Parser::makeModel( std::string filename ) {
 	enum MODE {
 		MODE_SEECK_SEARCH,
 		MODE_READ_MATRIX,
@@ -26,7 +26,7 @@ ModelPtr Parser::makeModel( std::string filename ) {
 
 	int fh = FileRead_open( filename.c_str( ) );
 	if ( fh == 0 ) {
-		return ModelPtr( );
+		return ModelMDLPtr( );
 	}
 
 	int texture_num = 0;
@@ -188,13 +188,13 @@ ModelPtr Parser::makeModel( std::string filename ) {
 	FileRead_close( fh );
 
 	//‚±‚±‚Åƒ‚ƒfƒ‹‚ðì‚éB
-	ModelPtr model( new Model );
+	ModelMDLPtr model( new ModelMDL );
 	model->alloc( point_index_num );
 	for ( int i = 0; i < point_index_num; i++ ) {
 		for ( int j = 0; j < 3; j++ ) {
 			int idx = point_index_array[ i ].idx[ j ];
 			Vector point = point_array[ idx ];
-			Model::VERTEX vertex;
+			ModelMDL::VERTEX vertex;
 			vertex.pos = matrix.multiply( point );
 			vertex.u = texture_array[ idx ].u;
 			vertex.v = texture_array[ idx ].v;

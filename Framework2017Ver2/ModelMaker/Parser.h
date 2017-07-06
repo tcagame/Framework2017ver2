@@ -4,12 +4,12 @@
 #include <string>
 
 PTR( Parser );
-PTR( Model );
+PTR( ModelMDL );
 
 class Parser {
 public:
 	Parser();
 	virtual ~Parser();
 public:
-	ModelPtr makeModel( std::string filename );
+	ModelMDLPtr makeModel( std::string filename );
 };
