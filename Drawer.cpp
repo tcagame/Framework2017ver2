@@ -52,47 +52,6 @@ ratio( ratio_ ) {
 
 }
 
-Drawer::Billboard::Billboard( ) :
-size( 0 ),
-res( 0 ),
-blend( BLEND_NONE ),
-ratio( 0.0 ) {
-
-}
-
-Drawer::Billboard::Billboard( Vector pos_, double size_, int res_, BLEND blend_, double ratio_ ) :
-pos( pos_ ),
-size( size_ ),
-res( res_ ),
-blend( blend_ ),
-ratio( ratio_ ) {
-
-}
-
-Drawer::Effect::Effect( ) :
-id( -1 ),
-handle( -1 ) {
-}
-
-Drawer::Effect::Effect( int id_, const Vector& pos_, double size_, const Vector& rotate_ ) :
-id( id_),
-pos( pos_ ),
-size( size_ ),
-rotate( rotate_ ),
-handle( -1 ) {
-
-}
-
-Drawer::Circle::Circle( ) {
-
-}
-
-Drawer::Circle::Circle( const Vector& pos_, const double radius_ ) :
-pos( pos_ ),
-radius( radius_ ) {
-
-}
-
 DrawerPtr Drawer::getTask( ) {
 	ApplicationPtr fw = Application::getInstance( );
 	return std::dynamic_pointer_cast< Drawer >( fw->getTask( getTag( ) ) );
@@ -149,31 +108,39 @@ void Drawer::drawSprite( const Sprite& sprite ) {
 }
 
 
-void Drawer::drawCircle( const Circle& circle ) {
-	DrawCircle( ( int )circle.pos.x, ( int )circle.pos.y, ( int )circle.radius, GetColor( 255, 0, 0 ), 0, 3 );
+void Drawer::drawCircle( const Vector& pos, const double radius ) {
+	DrawCircle( ( int )pos.x, ( int )pos.y, ( int )radius, GetColor( 255, 0, 0 ), 0, 3 );
 }
 
-void Drawer::drawBillboard( const Billboard& billboard ) {
-	switch( billboard.blend ) {
+void Drawer::drawBillboard( const Vector& pos, double size, int res, BLEND blend, double ratio ) {
+	switch( blend ) {
 	case BLEND_ALPHA:
-		SetDrawBlendMode( DX_BLENDMODE_ALPHA, ( int )( 255 * billboard.ratio ) );
+		SetDrawBlendMode( DX_BLENDMODE_ALPHA, ( int )( 255 * ratio ) );
 		break;
 	case BLEND_ADD:
-		SetDrawBlendMode( DX_BLENDMODE_ADD, ( int )( 255 * billboard.ratio ) );
+		SetDrawBlendMode( DX_BLENDMODE_ADD, ( int )( 255 * ratio ) );
 		break;
 	}
 
-	int cheak = DrawBillboard3D( VGet( ( float )billboard.pos.x, ( float )billboard.pos.y, ( float )billboard.pos.z ), 0.5f, 0.5f, ( float )billboard.size, 0.0f, _graphic_id[ billboard.res ], TRUE );
+	int cheak = DrawBillboard3D( VGet( ( float )pos.x, ( float )pos.y, ( float )pos.z ), 0.5f, 0.5f, ( float )size, 0.0f, _graphic_id[ res ], TRUE );
 	
-	if ( billboard.blend != BLEND_NONE ) {
+	if ( blend != BLEND_NONE ) {
 		SetDrawBlendMode( DX_BLENDMODE_NOBLEND, 0 );
 	}
 	
 }
 
-void Drawer::drawEffect( const Effect& effect ) {
+void Drawer::drawEffect( int id, const Vector& pos, double size, const Vector& rotate ) {
 # if EFFECKSEER
 		DrawGraph( 0, 0, _effekseer_fix_graph, TRUE );
+		int handle = PlayEffekseer3DEffect( id );
+		float size = ( float )size;
+		SetScalePlayingEffekseer3DEffect( handle,
+			size, size, size );
+		SetRotationPlayingEffekseer3DEffect( handle,
+			( float )rotate.x, ( float )rotate.y, ( float )rotate.z );
+		SetPosPlayingEffekseer3DEffect( handle,
+			( float )pos.x, ( float )pos.y, ( float )pos.z );
 		// Effekseerにより再生中のエフェクトを更新する。
 		UpdateEffekseer3D( );
 

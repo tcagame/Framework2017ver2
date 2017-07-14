@@ -42,40 +42,13 @@ public:
 		Sprite( Transform trans_, int res_, BLEND blend_ = BLEND_NONE, double ratio_ = 1.0 );
 	};
 
-	struct Billboard {
-		Vector pos;
-		double size;
-		int res;
-		BLEND blend;
-		double ratio;
-		Billboard( );
-		Billboard( Vector pos_, double size_, int res_, BLEND blend_, double ratio_ );
-	};
-	
-	struct Effect {
-		int id;
-		int handle;
-		Vector pos;
-		Vector rotate;
-		double size;
-		Effect( );
-		Effect( int id_, const Vector& pos_, double size_ = 1.0, const Vector& rotate_ = Vector( ) );
-	};
-
-	struct Circle {
-		Vector pos;
-		double radius;
-		Circle( );
-		Circle( const Vector& pos_, const double radius_ );
-	};
-
 public:
 	void initialize( );
 	void update( );
 	void drawSprite( const Sprite& sprite );
-	void drawCircle( const Circle& circle );
-	void drawBillboard( const Billboard& billboard );
-	void drawEffect( const Effect& effect );
+	void drawCircle( const Vector& pos, const double radius );
+	void drawBillboard( const Vector& pos, double size, int res, BLEND blend, double ratio );
+	void drawEffect( int id_, const Vector& pos_, double size_ = 1.0, const Vector& rotate_ = Vector( ) );
 	void loadGraph( int res, const char* filename );
 	void loadEffect( int id, const char* filename );
 	void createGraph( int res, int width, int height );
