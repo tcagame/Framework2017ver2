@@ -25,6 +25,7 @@
     <ClCompile Include="Device.cpp" />
     <ClCompile Include="Drawer.cpp" />
     <ClCompile Include="Keyboard.cpp" />
+    <ClCompile Include="LoadCSV.cpp" />
     <ClCompile Include="ModelMDL.cpp" />
     <ClCompile Include="ModelMV1.cpp" />
     <ClCompile Include="Mouse.cpp" />
@@ -40,6 +41,7 @@
     <ClInclude Include="Device.h" />
     <ClInclude Include="Drawer.h" />
     <ClInclude Include="Keyboard.h" />
+    <ClInclude Include="LoadCSV.h" />
     <ClInclude Include="mathmatics.h" />
     <ClInclude Include="ModelMDL.h" />
     <ClInclude Include="ModelMV1.h" />
