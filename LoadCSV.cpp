@@ -4,7 +4,7 @@
 
 const int MAX_BUFFER = 100;
 
-LoadCSV::LoadCSV( char* filename ) {
+LoadCSV::LoadCSV( char* filename, int max_num ) {
 	std::string path = filename;
 	path += ".csv";
 
@@ -17,12 +17,19 @@ LoadCSV::LoadCSV( char* filename ) {
 	char buffer[ MAX_BUFFER ];
 	while ( fgets( buffer, MAX_BUFFER, fp ) != NULL ) {
 		char* context;
-		_csv_data.push_back( strtok_s( buffer, ",", &context ) );
+		std::string filename = strtok_s( buffer, ",", &context );
+		filename.erase( --filename.end() );
+		_csv_data.push_back( filename );
 	}
+	assert( _csv_data.size( ) <= max_num );
 }
 
-std::string LoadCSV::getCSVData( int index ) {
+std::string LoadCSV::getData( int index ) {
 	return _csv_data[index];
+}
+
+int LoadCSV::getSize( ) {
+	return (int)_csv_data.size( );
 }
 
 LoadCSV::~LoadCSV( ) {
