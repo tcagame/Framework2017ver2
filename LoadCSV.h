@@ -4,7 +4,7 @@
 
 class LoadCSV {
 public:
-	LoadCSV( char* filename, int max_num );
+	LoadCSV( const char* filename, int max_num );
 	virtual ~LoadCSV( );
 public:
 	std::string getData( int index );
