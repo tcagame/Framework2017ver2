@@ -271,6 +271,20 @@ void Drawer::flip( ) {
 	ClearDrawScreen( );
 }
 
+int Drawer::getTextureHeight( const int res ) {
+	int height = 0;
+	int width = 0;
+	GetGraphSize( _graphic_id[ res ], &width, &height );
+	return height;
+}
+
+int Drawer::getTextureWidth( const int res ) {
+	int height = 0;
+	int width = 0;
+	GetGraphSize( _graphic_id[ res ], &width, &height );
+	return width;
+}
+
 void Drawer::drawLine( int x1, int y1, int x2, int y2 ) {
 	DrawLine( x1, y1, x2, y2, 0xFFFFFF ) ;
 }

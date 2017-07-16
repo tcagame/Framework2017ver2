@@ -63,7 +63,8 @@ public:
 	void setCamera( const Vector& pos, const Vector& target );
 	void resetFPS( );
 	void flip( );
-
+	int getTextureHeight( const int res );
+	int getTextureWidth( const int res );
 private:
 	const char* _directory;
 	
