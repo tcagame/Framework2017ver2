@@ -45,10 +45,10 @@ public:
 public:
 	void initialize( );
 	void update( );
-	void drawSprite( const Sprite& sprite );
-	void drawCircle( const Vector& pos, const double radius );
-	void drawBillboard( const Vector& pos, double size, int res, BLEND blend, double ratio );
-	void drawEffect( int id_, const Vector& pos_, double size_ = 1.0, const Vector& rotate_ = Vector( ) );
+	void drawSprite( const Sprite& sprite ) const;
+	void drawCircle( const Vector& pos, const double radius ) const;
+	void drawBillboard( const Vector& pos, double size, int res, BLEND blend, double ratio ) const;
+	void drawEffect( int id_, const Vector& pos_, double size_ = 1.0, const Vector& rotate_ = Vector( ) ) const;
 	void loadGraph( int res, const char* filename );
 	void loadEffect( int id, const char* filename );
 	void createGraph( int res, int width, int height );
@@ -56,15 +56,15 @@ public:
 	void clearToGraph( int res );
 	void unloadGraph( int res );
 	void unloadAllGraph( );
-	void drawString( int x, int y, const char* string, ... );
-	void drawLine( int x1, int y1, int x2, int y2 );
-	void drawLine( const Vector& pos1, const Vector& pos2 );
+	void drawString( int x, int y, const char* string, ... ) const;
+	void drawLine( int x1, int y1, int x2, int y2 ) const;
+	void drawLine( const Vector& pos1, const Vector& pos2 ) const;
 	void setCameraUp( const Vector& up );
 	void setCamera( const Vector& pos, const Vector& target );
 	void resetFPS( );
 	void flip( );
-	int getTextureHeight( const int res );
-	int getTextureWidth( const int res );
+	int getTextureHeight( const int res ) const;
+	int getTextureWidth( const int res ) const;
 private:
 	const char* _directory;
 	

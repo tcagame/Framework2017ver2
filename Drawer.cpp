@@ -80,7 +80,7 @@ void Drawer::initialize( ) {
 void Drawer::update( ) {
 }
 
-void Drawer::drawSprite( const Sprite& sprite ) {
+void Drawer::drawSprite( const Sprite& sprite ) const {
 	switch ( sprite.blend ) {
 	case BLEND_ALPHA:
 		SetDrawBlendMode( DX_BLENDMODE_ALPHA, ( int )( 255 * sprite.ratio ) );
@@ -108,11 +108,11 @@ void Drawer::drawSprite( const Sprite& sprite ) {
 }
 
 
-void Drawer::drawCircle( const Vector& pos, const double radius ) {
+void Drawer::drawCircle( const Vector& pos, const double radius ) const {
 	DrawCircle( ( int )pos.x, ( int )pos.y, ( int )radius, GetColor( 255, 0, 0 ), 0, 3 );
 }
 
-void Drawer::drawBillboard( const Vector& pos, double size, int res, BLEND blend, double ratio ) {
+void Drawer::drawBillboard( const Vector& pos, double size, int res, BLEND blend, double ratio ) const {
 	switch( blend ) {
 	case BLEND_ALPHA:
 		SetDrawBlendMode( DX_BLENDMODE_ALPHA, ( int )( 255 * ratio ) );
@@ -130,7 +130,7 @@ void Drawer::drawBillboard( const Vector& pos, double size, int res, BLEND blend
 	
 }
 
-void Drawer::drawEffect( int id, const Vector& pos, double size, const Vector& rotate ) {
+void Drawer::drawEffect( int id, const Vector& pos, double size, const Vector& rotate ) const {
 # if EFFECKSEER
 		DrawGraph( 0, 0, _effekseer_fix_graph, TRUE );
 		int handle = PlayEffekseer3DEffect( id );
@@ -271,25 +271,27 @@ void Drawer::flip( ) {
 	ClearDrawScreen( );
 }
 
-int Drawer::getTextureHeight( const int res ) {
-	int height = 0;
-	int width = 0;
+int Drawer::getTextureHeight( const int res ) const {
+	assert( _graphic_id[ res ] >= 0 );
+	int height = -1;
+	int width = -1;
 	GetGraphSize( _graphic_id[ res ], &width, &height );
 	return height;
 }
 
-int Drawer::getTextureWidth( const int res ) {
-	int height = 0;
-	int width = 0;
+int Drawer::getTextureWidth( const int res ) const {
+	assert( _graphic_id[ res ] >= 0 );
+	int height = -1;
+	int width = -1;
 	GetGraphSize( _graphic_id[ res ], &width, &height );
 	return width;
 }
 
-void Drawer::drawLine( int x1, int y1, int x2, int y2 ) {
+void Drawer::drawLine( int x1, int y1, int x2, int y2 ) const {
 	DrawLine( x1, y1, x2, y2, 0xFFFFFF ) ;
 }
 
-void Drawer::drawLine( const Vector& pos1, const Vector& pos2 ) {
+void Drawer::drawLine( const Vector& pos1, const Vector& pos2 ) const {
 	VECTOR p1;
 	p1.x = ( float )pos1.x;
 	p1.y = ( float )pos1.y;
@@ -301,7 +303,7 @@ void Drawer::drawLine( const Vector& pos1, const Vector& pos2 ) {
 	DrawLine3D( p1, p2, 0xFFFFFF );
 }
 
-void Drawer::drawString( int x, int y, const char* string, ... ) {
+void Drawer::drawString( int x, int y, const char* string, ... ) const {
 	char buf[ 1024 ];
 	va_list ap;
 	unsigned int color = 0xFFFFFF;
