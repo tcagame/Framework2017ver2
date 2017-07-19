@@ -272,7 +272,6 @@ void Drawer::flip( ) {
 }
 
 int Drawer::getTextureHeight( const int res ) const {
-	assert( _graphic_id[ res ] >= 0 );
 	int height = -1;
 	int width = -1;
 	GetGraphSize( _graphic_id[ res ], &width, &height );
@@ -280,7 +279,6 @@ int Drawer::getTextureHeight( const int res ) const {
 }
 
 int Drawer::getTextureWidth( const int res ) const {
-	assert( _graphic_id[ res ] >= 0 );
 	int height = -1;
 	int width = -1;
 	GetGraphSize( _graphic_id[ res ], &width, &height );
