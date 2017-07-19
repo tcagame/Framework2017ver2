@@ -11,9 +11,6 @@
 
 static const int REFRESH_COUNT = 60;	//•½‹Ï‚ğæ‚éƒTƒ“ƒvƒ‹”
 static const int FPS = 30;
-static const double SHADOW_RADIUS = 0.5;
-
-const char* SHADOW_TEXTURE_PATH = "../Resource/Images/Shadow/shadow.png";
 
 Drawer::Transform::Transform( ) :
 sx( 0 ),
