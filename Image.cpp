@@ -61,17 +61,13 @@ void Image::setRect( int tx, int ty, int tw, int th ) {
 	_ty = ty;
 	_tw = tw;
 	_th = th;
-	_sx2 = -1;
-	_sy2 = -1;
 }
 
-void Image::setPos( const Vector& pos, const Vector& pos2 ) {
-	_sx1 = ( int )pos.x;
-	_sy1 = ( int )pos.y;
-	if ( !pos2.isOrijin( ) ) {
-		_sx2 = ( int )pos2.x;
-		_sy2 = ( int )pos2.y;
-	}
+void Image::setPos( const int sx1, const int sy1, const int sx2, const int sy2 ) {
+	_sx1 = sx1;
+	_sy1 = sy1;
+	_sx2 = sx2;
+	_sy2 = sy2;
 }
 
 

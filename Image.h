@@ -19,8 +19,8 @@ public:
 public:
 	bool load( std::string path );
 	void draw( ) const;
-	void setRect( int tx, int ty, int tw, int th );
-	void setPos( const Vector& pos, const Vector& pos2 = Vector( ) );
+	void setRect( int tx = -1, int ty = -1, int tw = -1, int th = -1 );
+	void setPos( const int sx1, const int sy1, const int sx2 = -1, const int sy2 = -1 );
 	void getImageSize( int& width, int& height ) const;
 	int getHandle( ) const;
 protected:
