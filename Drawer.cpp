@@ -1,6 +1,7 @@
 #include "Drawer.h"
 #include "Application.h"
 #include "DxLib.h"
+#include "Image.h"
 
 #if EFFECKSEER
 	// EffekseerForDXLib.hをインクルードします。
@@ -11,43 +12,6 @@
 
 static const int REFRESH_COUNT = 60;	//平均を取るサンプル数
 static const int FPS = 30;
-
-Drawer::Transform::Transform( ) :
-sx( 0 ),
-sy( 0 ),
-tx( 0 ),
-ty( 0 ),
-tw( 0 ),
-th( -1 ) {
-}
-
-Drawer::Transform::Transform( int sx_, int sy_, int tx_, int ty_, int tw_, int th_, int sx2_, int sy2_ ) :
-sx( sx_ ),
-sy( sy_ ),
-tx( tx_ ),
-ty( ty_ ),
-tw( tw_ ),
-th( th_ ),
-sx2( sx2_ ),
-sy2( sy2_ ) {
-}
-
-
-
-
-Drawer::Sprite::Sprite( ) :
-res( -1 ),
-blend( BLEND_NONE ) {
-
-}
-
-Drawer::Sprite::Sprite( Transform trans_ ,int res_, BLEND blend_, double ratio_ ) :
-trans( trans_ ),
-res( res_ ),
-blend( blend_ ),
-ratio( ratio_ ) {
-
-}
 
 DrawerPtr Drawer::getTask( ) {
 	ApplicationPtr fw = Application::getInstance( );
@@ -62,10 +26,6 @@ Drawer::~Drawer( ) {
 }
 
 void Drawer::initialize( ) {
-	for ( int i = 0; i < GRAPHIC_ID_NUM; i++ ) {
-		_graphic_id[ i ] = -1;
-	}
-
 	_refresh_count = 0;
 	_fps = FPS;
 	_start_time = 0;
@@ -77,54 +37,8 @@ void Drawer::initialize( ) {
 void Drawer::update( ) {
 }
 
-void Drawer::drawSprite( const Sprite& sprite ) const {
-	switch ( sprite.blend ) {
-	case BLEND_ALPHA:
-		SetDrawBlendMode( DX_BLENDMODE_ALPHA, ( int )( 255 * sprite.ratio ) );
-		break;
-	case BLEND_ADD:
-		SetDrawBlendMode( DX_BLENDMODE_ADD  , ( int )( 255 * sprite.ratio ) );
-		break;
-	}
-
-	if ( sprite.trans.tw < 0 ) {
-		DrawGraph( sprite.trans.sx, sprite.trans.sy, _graphic_id[ sprite.res ], TRUE );
-	} else if ( sprite.trans.sy2 < 0 ) {
-		DrawRectGraph( sprite.trans.sx, sprite.trans.sy, sprite.trans.tx, sprite.trans.ty, sprite.trans.tw, sprite.trans.th, _graphic_id[ sprite.res ], TRUE, FALSE );
-	} else {
-		DrawRectExtendGraph(
-			sprite.trans.sx , sprite.trans.sy ,
-			sprite.trans.sx2, sprite.trans.sy2,
-			sprite.trans.tx , sprite.trans.ty ,
-			sprite.trans.tw , sprite.trans.th , _graphic_id[ sprite.res ], TRUE );
-	}
-
-	if ( sprite.blend != BLEND_NONE ) {
-		SetDrawBlendMode( DX_BLENDMODE_NOBLEND, 0 );
-	}
-}
-
-
 void Drawer::drawCircle( const Vector& pos, const double radius ) const {
 	DrawCircle( ( int )pos.x, ( int )pos.y, ( int )radius, GetColor( 255, 0, 0 ), 0, 3 );
-}
-
-void Drawer::drawBillboard( const Vector& pos, double size, int res, BLEND blend, double ratio ) const {
-	switch( blend ) {
-	case BLEND_ALPHA:
-		SetDrawBlendMode( DX_BLENDMODE_ALPHA, ( int )( 255 * ratio ) );
-		break;
-	case BLEND_ADD:
-		SetDrawBlendMode( DX_BLENDMODE_ADD, ( int )( 255 * ratio ) );
-		break;
-	}
-
-	int cheak = DrawBillboard3D( VGet( ( float )pos.x, ( float )pos.y, ( float )pos.z ), 0.5f, 0.5f, ( float )size, 0.0f, _graphic_id[ res ], TRUE );
-	
-	if ( blend != BLEND_NONE ) {
-		SetDrawBlendMode( DX_BLENDMODE_NOBLEND, 0 );
-	}
-	
 }
 
 void Drawer::drawEffect( int id, const Vector& pos, double size, const Vector& rotate ) const {
@@ -161,80 +75,14 @@ void Drawer::loadEffect( int id, const char* filename ) {
 #	endif
 }
 
-void Drawer::createGraph( int res, int width, int height ) {
-	unloadGraph( res );
-	assert( res < GRAPHIC_ID_NUM );
-	_graphic_id[ res ] = MakeScreen( width, height, TRUE );
-}
-
-void Drawer::drawSpriteToGraph( int res, const Sprite& sprite ) {
-	SetDrawScreen( _graphic_id[ res ] );
-
-	switch ( sprite.blend ) {
-	case BLEND_ALPHA:
-		SetDrawBlendMode( DX_BLENDMODE_ALPHA, ( int )( 255 * sprite.ratio ) );
-		break;
-	case BLEND_ADD:
-		SetDrawBlendMode( DX_BLENDMODE_ADD  , ( int )( 255 * sprite.ratio ) );
-		break;
-	}
-
-	if ( sprite.trans.tw < 0 ) {
-		DrawGraph( sprite.trans.sx, sprite.trans.sy, _graphic_id[ sprite.res ], TRUE );
-	} else if ( sprite.trans.sy2 < 0 ) {
-		DrawRectGraph( sprite.trans.sx, sprite.trans.sy, sprite.trans.tx, sprite.trans.ty, sprite.trans.tw, sprite.trans.th, _graphic_id[ sprite.res ], TRUE, FALSE );
-	} else {
-		DrawRectExtendGraph(
-			sprite.trans.sx , sprite.trans.sy ,
-			sprite.trans.sx2, sprite.trans.sy2,
-			sprite.trans.tx , sprite.trans.ty ,
-			sprite.trans.tw , sprite.trans.th , _graphic_id[ sprite.res ], TRUE );
-	}
-
-	if ( sprite.blend != BLEND_NONE ) {
-		SetDrawBlendMode( DX_BLENDMODE_NOBLEND, 0 );
-	}
-
-	SetDrawScreen( DX_SCREEN_BACK );
-}
-
-void Drawer::clearToGraph( int res ) {
-	SetDrawScreen( _graphic_id[ res ] );
-	ClearDrawScreen( );
-	SetDrawScreen( DX_SCREEN_BACK );
-
-}
-
-
-
-void Drawer::loadGraph( int res, const char * filename ) {
-	unloadGraph( res );
+ImagePtr Drawer::createImage( const char* filename ) const {
+	ImagePtr result( ImagePtr( new Image ) );
 	std::string path = _directory;
 	path += "/";
 	path +=  filename;
-	assert( res < GRAPHIC_ID_NUM );
-	_graphic_id[ res ] = LoadGraph( path.c_str( ) );
-	if ( _graphic_id[ res ] < 0 ) {
-		path = "../" + path;
-		_graphic_id[ res ] = LoadGraph( path.c_str( ) );
-		assert( _graphic_id[ res ] >= 0 );
-	}
-}
-
-void Drawer::unloadGraph( int res ) {
-	if ( _graphic_id[ res ] >= 0 ) {
-		DeleteGraph( _graphic_id[ res ] );
-	}
-	_graphic_id[ res ] = -1;
-}
-
-void Drawer::unloadAllGraph( ) {
-	for ( int i = 0; i < GRAPHIC_ID_NUM; i++ ) {
-		if ( _graphic_id[ i ] >= 0 ) {
-			DeleteGraph( _graphic_id[ i ] );
-		}
-		_graphic_id[ i ] = -1;
-	}
+	bool check_image = result->load( path );
+	assert( check_image );
+	return result;
 }
 
 void Drawer::resetFPS( ) {
@@ -266,20 +114,6 @@ void Drawer::flip( ) {
 
 	ScreenFlip( );
 	ClearDrawScreen( );
-}
-
-int Drawer::getTextureHeight( const int res ) const {
-	int height = -1;
-	int width = -1;
-	GetGraphSize( _graphic_id[ res ], &width, &height );
-	return height;
-}
-
-int Drawer::getTextureWidth( const int res ) const {
-	int height = -1;
-	int width = -1;
-	GetGraphSize( _graphic_id[ res ], &width, &height );
-	return width;
 }
 
 void Drawer::drawLine( int x1, int y1, int x2, int y2 ) const {

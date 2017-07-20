@@ -24,6 +24,8 @@
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="Device.cpp" />
     <ClCompile Include="Drawer.cpp" />
+    <ClCompile Include="Image.cpp" />
+    <ClCompile Include="ImageTarget.cpp" />
     <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="LoadCSV.cpp" />
     <ClCompile Include="ModelMDL.cpp" />
@@ -40,6 +42,8 @@
     <ClInclude Include="Client.h" />
     <ClInclude Include="Device.h" />
     <ClInclude Include="Drawer.h" />
+    <ClInclude Include="Image.h" />
+    <ClInclude Include="ImageTarget.h" />
     <ClInclude Include="Keyboard.h" />
     <ClInclude Include="LoadCSV.h" />
     <ClInclude Include="mathmatics.h" />

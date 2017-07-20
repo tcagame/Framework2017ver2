@@ -15,6 +15,8 @@
     <ClCompile Include="ModelMDL.cpp" />
     <ClCompile Include="ModelMV1.cpp" />
     <ClCompile Include="LoadCSV.cpp" />
+    <ClCompile Include="Image.cpp" />
+    <ClCompile Include="ImageTarget.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Keyboard.h" />
@@ -33,5 +35,7 @@
     <ClInclude Include="ModelMDL.h" />
     <ClInclude Include="ModelMV1.h" />
     <ClInclude Include="LoadCSV.h" />
+    <ClInclude Include="Image.h" />
+    <ClInclude Include="ImageTarget.h" />
   </ItemGroup>
 </Project>
