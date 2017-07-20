@@ -3,7 +3,6 @@
 #include "Task.h"
 #include "smart_ptr.h"
 #include "Network.h"
-#include "DxLib.h"
 #include <array>
 
 PTR( Server );

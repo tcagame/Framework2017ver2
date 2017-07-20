@@ -1,6 +1,7 @@
 #include "Server.h"
 #include "Application.h"
 #include "Network.h"
+#include "DxLib.h"
 
 const int SETTING_NUM = 10;
 
