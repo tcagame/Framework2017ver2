@@ -7,5 +7,6 @@ public:
 	virtual ~ImageTarget( );
 public:
 	void create( int width, int height );
+	void clear( );
 };
 

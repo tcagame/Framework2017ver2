@@ -61,6 +61,8 @@ void Image::setRect( int tx, int ty, int tw, int th ) {
 	_ty = ty;
 	_tw = tw;
 	_th = th;
+	_sx2 = -1;
+	_sy2 = -1;
 }
 
 void Image::setPos( const Vector& pos, const Vector& pos2 ) {
@@ -75,6 +77,10 @@ void Image::setPos( const Vector& pos, const Vector& pos2 ) {
 
 void Image::getImageSize( int& width, int& height ) const {
 	GetGraphSize( _handle, &width, &height );
+}
+
+int Image::getHandle( ) const {
+	return _handle;
 }
 
 void Image::setHandle( int handle ) {

@@ -22,6 +22,8 @@ public:
 	void setRect( int tx, int ty, int tw, int th );
 	void setPos( const Vector& pos, const Vector& pos2 = Vector( ) );
 	void getImageSize( int& width, int& height ) const;
+	int getHandle( ) const;
+protected:
 	void setHandle( int handle );
 private:
 	int _handle;

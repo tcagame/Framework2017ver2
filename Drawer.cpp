@@ -2,6 +2,7 @@
 #include "Application.h"
 #include "DxLib.h"
 #include "Image.h"
+#include "ImageTarget.h"
 
 #if EFFECKSEER
 	// EffekseerForDXLib.hをインクルードします。
@@ -156,4 +157,12 @@ void Drawer::setCamera( const Vector& pos, const Vector& target ) {
 		// DXライブラリのカメラとEffekseerのカメラを同期する。
 		Effekseer_Sync3DSetting();
 #	endif
+}
+
+void Drawer::setImageTarget( ImageTargetPtr image ) {
+	if ( image == ImageTargetPtr( ) ) {
+		SetDrawScreen( DX_SCREEN_BACK );
+	} else {
+		SetDrawScreen( image->getHandle( ) );
+	}
 }

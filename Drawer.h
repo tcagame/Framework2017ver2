@@ -7,6 +7,7 @@
 PTR( Drawer );
 PTR( Model );
 PTR( Image );
+PTR( ImageTarget );
 
 class Drawer : public Task {
 public:
@@ -27,6 +28,7 @@ public:
 	void drawLine( const Vector& pos1, const Vector& pos2 ) const;
 	void setCameraUp( const Vector& up );
 	void setCamera( const Vector& pos, const Vector& target );
+	void setImageTarget( ImageTargetPtr image = ImageTargetPtr( ) );
 	void resetFPS( );
 	void flip( );
 private:
