@@ -1,5 +1,6 @@
 #pragma once
 #include "Image.h"
+#include <string>
 
 class ImageTarget: public Image {
 public:
@@ -8,5 +9,6 @@ public:
 public:
 	void create( int width, int height );
 	void clear( );
+	void save( std::string path );
 };
 
