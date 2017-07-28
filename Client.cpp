@@ -9,7 +9,6 @@ ClientPtr Client::getTask( ) {
 
 Client::Client( ) {
 	ApplicationPtr fw = Application::getInstance( );
-	_size = 0;
 	_phase = PHASE_READY;
 
 	// Server IP ì«Ç›çûÇ›

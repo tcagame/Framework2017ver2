@@ -151,7 +151,3 @@ void Server::sendCondition( ) {
 		}
 	}
 }
-
-void* Server::getData( ) const {
-	return _data;
-}

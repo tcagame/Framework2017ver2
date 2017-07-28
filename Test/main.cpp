@@ -30,7 +30,7 @@ public:
 		Vector stick( device->getDirX( ), device->getDirY( ) );
 		_image_pos += stick;
 		
-		_image->setPos( _image_pos );
+		_image->setPos( ( int )_image_pos.x, ( int )_image_pos.y );
 		_image->draw( );
 		drawer->flip( );
 	}

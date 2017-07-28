@@ -30,6 +30,5 @@ private:
 	int _udp_handle;
 	int _network_state_time;
 	int _send_network_condition_num;
-	void* _data;
 	unsigned int _get_boss_data;
 };
