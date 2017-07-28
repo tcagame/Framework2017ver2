@@ -22,7 +22,7 @@ public:
 public:
 	std::string getPhase( ) const;
 	void send( const SERVERDATA& data );
-	CLIENTDATA getClientData( );
+	void recieveClientData( void* data, int size );
 private:
 	enum PHASE {
 		PHASE_READY,
@@ -34,7 +34,6 @@ private:
 	void updateOffline( );
 	bool load( );
 	bool connect( );
-	void recieveStatus( );
 	void responseOfState( );
 private:
 	PHASE _phase;
@@ -42,6 +41,6 @@ private:
 	int _tcp_handle;
 	int _udp_handle;
 	int _network_state_time;
-	CLIENTDATA _status;
+	int _size;
 };
 

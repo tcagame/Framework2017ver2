@@ -9,7 +9,7 @@ ClientPtr Client::getTask( ) {
 
 Client::Client( ) {
 	ApplicationPtr fw = Application::getInstance( );
-
+	_size = 0;
 	_phase = PHASE_READY;
 
 	// Server IP ì«Ç›çûÇ›
@@ -18,12 +18,6 @@ Client::Client( ) {
 	_network_state_time = 0;
 	_tcp_handle = -1;
 	_udp_handle = MakeUDPSocket( UDP_PORT_NUM );
-
-	for ( int i = 0; i < PLAYER_NUM; i++ ) {
-		_status.player[ i ].x = 0;
-		_status.player[ i ].y = 0;
-		_status.player[ i ].button = BUTTON_NONE;
-	}
 }
 
 Client::~Client( ) {
@@ -57,8 +51,6 @@ void Client::updateConnecting( ) {
 		CloseNetWork( _tcp_handle );	// ê⁄ë±ÇífÇ¬
 		_tcp_handle = -1;
 	}
-	
-	recieveStatus( );
 	responseOfState( );
 }
 
@@ -119,13 +111,9 @@ void Client::send( const SERVERDATA& data ) {
 	NetWorkSend( _tcp_handle, &data, sizeof( SERVERDATA ) );
 }
 
-CLIENTDATA Client::getClientData( ) {
-	return _status;
-}
-
-void Client::recieveStatus( ) {
+void Client::recieveClientData( void* data, int size ) {
 	while ( CheckNetWorkRecvUDP( _udp_handle ) == TRUE ) {
-		NetWorkRecvUDP( _udp_handle, NULL, NULL, &_status, sizeof( CLIENTDATA ), FALSE );
+		NetWorkRecvUDP( _udp_handle, NULL, NULL, data, size, FALSE );
 	}
 }
 

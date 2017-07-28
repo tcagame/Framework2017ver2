@@ -20,13 +20,6 @@ Server::Server( ) {
 	PreparationListenNetWork( TCP_PORT_NUM );
 	_udp_handle = MakeUDPSocket( -1 );
 
-	for ( int i = 0; i < PLAYER_NUM; i++ ) {
-		_data.player[ i ].x = 0;
-		_data.player[ i ].y = 0;
-		_data.player[ i ].button = BUTTON_NONE;
-		_data.player[ i ].exist = NOT_EXIST;
-	}
-	_data.scene = SCENE_TITLE;
 	_get_boss_data = 0;
 }
 
@@ -107,7 +100,7 @@ void Server::executeNetData( const SERVERDATA& data ) {
 		//value[ 0 ] = ƒvƒŒƒCƒ„[”Ô†
 		//value[ 1 ] = power
 		//value[ 2 ] = ”{—¦
-		damage( data.value[ 0 ], data.value[ 1 ] * data.value[ 2 ] );
+		//damage( data.value[ 0 ], data.value[ 1 ] * data.value[ 2 ] );
 		break;
 	case COMMAND_BOSS_DEAD:
 		_get_boss_data |= data.value[ 0 ];
@@ -125,22 +118,14 @@ void Server::saveIP( ) {
 	fclose( fp );
 }
 
-void Server::sendStatus( const CLIENTDATA& data ) {
-	for ( int i = 0; i < PLAYER_NUM; i++ ) {
-		_data.player[ i ].x = data.player[ i ].x;
-		_data.player[ i ].y = data.player[ i ].y;
-		_data.player[ i ].button = data.player[ i ].button;
-		_data.player[ i ].hp = data.player[ i ].hp;
-		_data.player[ i ].exist = data.player[ i ].exist;
-	}
-	_data.scene = data.scene;
+void Server::sendClientData( void* data, int size ) {
 	for ( int i = 0; i < MAX_MACHINE; i++ ) {
 		if ( _machine[ i ] < 0 ) {
 			continue;
 		}
 		IPDATA ip;
 		GetNetWorkIP( _machine[ i ], &ip );
-		NetWorkSendUDP( _udp_handle, ip, UDP_PORT_NUM, &_data, sizeof( CLIENTDATA ) ) ;
+		NetWorkSendUDP( _udp_handle, ip, UDP_PORT_NUM, data, size ) ;
 	}
 }
 
@@ -167,26 +152,6 @@ void Server::sendCondition( ) {
 	}
 }
 
-CLIENTDATA Server::getData( ) {
+void* Server::getData( ) const {
 	return _data;
-}
-
-void Server::damage( unsigned int index, unsigned int power ) {
-	if ( _data.player[ index ].hp < power ) {
-		_data.player[ index ].hp = 0;
-	} else {
-		_data.player[ index ].hp -= power;
-	}
-}
-
-void Server::setScene( unsigned char scene ) {
-	_data.scene = scene;
-}
-
-unsigned int Server::getBossData( ) {
-	return _get_boss_data;
-}
-
-void Server::resetBossData( ) {
-	_get_boss_data = 0;
 }
