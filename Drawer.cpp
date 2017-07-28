@@ -77,12 +77,14 @@ void Drawer::loadEffect( int id, const char* filename ) {
 }
 
 ImagePtr Drawer::createImage( const char* filename ) const {
-	ImagePtr result( ImagePtr( new Image ) );
+	ImagePtr result = ImagePtr( );
 	std::string path = _directory;
 	path += "/";
 	path +=  filename;
-	bool check_image = result->load( path );
-	assert( check_image );
+	ImagePtr image = ImagePtr( new Image );
+	if ( image->load( path ) ) {
+		result = image;
+	}
 	return result;
 }
 
