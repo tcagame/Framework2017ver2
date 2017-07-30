@@ -11,7 +11,7 @@
 
 #include <assert.h>
 
-static const int REFRESH_COUNT = 120;	//平均を取るサンプル数
+static const int REFRESH_COUNT = 60;	//平均を取るサンプル数
 static const int FPS = 60;
 static const double FRAME_TIME = 1000.0 / FPS;
 
@@ -138,7 +138,6 @@ void Drawer::flip( ) {
 	}
 	
 	if ( !_skip ) {
-		drawString( 0, 0, "%2f", _fps );
 		ScreenFlip( );
 		ClearDrawScreen( );
 	}
