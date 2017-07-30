@@ -18,6 +18,8 @@ public:
 	void scaleTransform( const Matrix& scale_mat );
 	void reset( );
 	double getEndAnimTime( ) const;
+	bool isHitLine( const Vector& begin, const Vector& end ) const;
+	bool isHitSphere( const Vector& pos, const float radius ) const;
 private:
 	int _mesh;
 	int _anim;
