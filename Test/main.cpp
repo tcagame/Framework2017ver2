@@ -34,7 +34,7 @@ public:
 			drawer->skipFlipping( );
 		} else {
 			_image->setPos( ( int )_image_pos.x, ( int )_image_pos.y );
-			for ( int i = 0; i < 1; i++ ) {
+			for ( int i = 0; i < 100; i++ ) {
 				_image->draw( );
 			}
 		}

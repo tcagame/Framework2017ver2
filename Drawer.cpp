@@ -11,7 +11,7 @@
 
 #include <assert.h>
 
-static const int REFRESH_COUNT = 20;	//平均を取るサンプル数
+static const int REFRESH_COUNT = 120;	//平均を取るサンプル数
 static const int FPS = 60;
 static const double FRAME_TIME = 1000.0 / FPS;
 
@@ -93,12 +93,14 @@ ImagePtr Drawer::createImage( const char* filename ) const {
 
 void Drawer::resetFPS( ) {
 	_refresh_count = 0;
-	_start_time = GetNowCount( );
 }
 
 void Drawer::flip( ) {
 	//現在の時間
 	int now_time = GetNowCount( );
+	if ( _refresh_count == 0 ) {
+		_start_time = now_time;
+	}
 
 	//60フレーム目なら平均を計算する
 	if ( _refresh_count >= REFRESH_COUNT && !_skip ) { 
@@ -116,7 +118,6 @@ void Drawer::flip( ) {
 	}
 
 	_over = false;
-	_refresh_count++;
 
 	//0フレーム目からの時間
 	int took_time = now_time - _start_time;
@@ -130,7 +131,8 @@ void Drawer::flip( ) {
 	if ( wait_time >= 0 ) {
 		//待機
 		Sleep( wait_time );
-	} else {
+	}
+	if ( ( int )( wait_time / FRAME_TIME ) < 0 ) {
 		//FPSをオーバーした
 		_over = true;
 	}
@@ -142,6 +144,7 @@ void Drawer::flip( ) {
 	}
 	
 	_skip = false;
+	_refresh_count++;
 }
 
 bool Drawer::isOverFPS( ) const {
