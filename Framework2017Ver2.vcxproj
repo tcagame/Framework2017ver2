@@ -40,6 +40,7 @@
     <ClInclude Include="Application.h" />
     <ClInclude Include="Binary.h" />
     <ClInclude Include="Client.h" />
+    <ClInclude Include="Data.h" />
     <ClInclude Include="Device.h" />
     <ClInclude Include="Drawer.h" />
     <ClInclude Include="Image.h" />

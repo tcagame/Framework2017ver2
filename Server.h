@@ -2,39 +2,37 @@
 
 #include "Task.h"
 #include "smart_ptr.h"
-#include "Network.h"
 #include <array>
 
 PTR( Server );
+PTR( Data );
 
 class Server : public Task {
 public:
 	static std::string getTag( ) { return "SERVER"; }
 	static ServerPtr getTask( );
 public:
-	Server( );
+	static const int MAX_MACHINES = 10;
+public:
+	Server( DataPtr data );
 	virtual ~Server( );
 public:
 	virtual void update( );
 	void saveIP( );
 	std::string getMachineIPStr( int index );
-	void sendStatus( const CLIENTDATA& data );
-	void setConecting( int index, int device );
-	CLIENTDATA getData( );
-	void setScene( unsigned char scene );
-	unsigned int getBossData( );
-	void resetBossData( );
+	void sendUdp( DataPtr data );
+	bool isRecieving( ) const;
 private:
 	void listenForAcceptNewClient( );
 	void listenForPackets( );
+	void lostMachine( );
+	void recieveTcp( );
 	void sendCondition( );
-	void executeNetData( const SERVERDATA& data );
-	void damage( unsigned int index, unsigned int power );
 private:
-	std::array< int, MAX_MACHINE > _machine;
+	std::array< int, MAX_MACHINES > _machine;
 	int _udp_handle;
-	int _network_state_time;
-	int _send_network_condition_num;
-	CLIENTDATA _data;
-	unsigned int _get_boss_data;
+	DataPtr _data;
+	int _target_michine;
+	bool _recieving;
+	int _condition_time;
 };

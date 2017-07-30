@@ -1,5 +1,7 @@
 #include "Client.h"
 #include "Application.h"
+#include "Data.h"
+#include "Network.h"
 #include "DxLib.h"
 
 ClientPtr Client::getTask( ) {
@@ -7,9 +9,9 @@ ClientPtr Client::getTask( ) {
 	return std::dynamic_pointer_cast< Client >( fw->getTask( Client::getTag( ) ) );
 }
 
-Client::Client( ) {
-	ApplicationPtr fw = Application::getInstance( );
-
+Client::Client( DataPtr data_udp, DataPtr data_tcp ) :
+_data_udp( data_udp ),
+_data_tcp( data_tcp ) {
 	_phase = PHASE_READY;
 
 	// Server IP 読み込み
@@ -18,12 +20,6 @@ Client::Client( ) {
 	_network_state_time = 0;
 	_tcp_handle = -1;
 	_udp_handle = MakeUDPSocket( UDP_PORT_NUM );
-
-	for ( int i = 0; i < PLAYER_NUM; i++ ) {
-		_status.player[ i ].x = 0;
-		_status.player[ i ].y = 0;
-		_status.player[ i ].button = BUTTON_NONE;
-	}
 }
 
 Client::~Client( ) {
@@ -58,8 +54,8 @@ void Client::updateConnecting( ) {
 		_tcp_handle = -1;
 	}
 	
-	recieveStatus( );
-	responseOfState( );
+	recieveUdp( );
+	recieveTcp( );
 }
 
 bool Client::load( ) {
@@ -111,40 +107,41 @@ bool Client::connect( ) {
 	return _tcp_handle >= 0;
 }
 
-void Client::send( const SERVERDATA& data ) {
+void Client::sendTcp( DataPtr data ) {
 	if ( _tcp_handle < 0 ) {
 		return;
 	}
 
-	NetWorkSend( _tcp_handle, &data, sizeof( SERVERDATA ) );
+	NetWorkSend( _tcp_handle, data->getPtr( ), data->getSize( ) );
 }
 
-CLIENTDATA Client::getClientData( ) {
-	return _status;
-}
-
-void Client::recieveStatus( ) {
+void Client::recieveUdp( ) {
 	while ( CheckNetWorkRecvUDP( _udp_handle ) == TRUE ) {
-		NetWorkRecvUDP( _udp_handle, NULL, NULL, &_status, sizeof( CLIENTDATA ), FALSE );
+		NetWorkRecvUDP( _udp_handle, NULL, NULL, _data_udp->getPtr( ), _data_udp->getSize( ), FALSE );
 	}
 }
 
-void Client::responseOfState( ) {
+void Client::recieveTcp( ) {
 	if ( _tcp_handle < 0 ) {
 		return;
 	}
-
+	
 	if ( GetNetWorkDataLength( _tcp_handle ) <= 0 ) {
+		return;
+	}
+	
+	// タイプとデータ長を読み込む(データは破棄しない)
+	char fourcc[ 4 ];
+	NetWorkRecvToPeek( _tcp_handle, ( void * )fourcc, sizeof( fourcc ) );
+	if ( fourcc[ 0 ] == 'C' && 
+		 fourcc[ 1 ] == 'O' &&
+		 fourcc[ 2 ] == 'N' &&
+		 fourcc[ 3 ] == 'D' ) {
+		// 破棄して終了
+		NetWorkRecv( _tcp_handle, ( void * )fourcc, sizeof( fourcc ) );
 		return;
 	}
 
 	// 受信
-	SERVERDATA data;
-	NetWorkRecv( _tcp_handle, &data, sizeof( data ) );
-
-	// データ処理
-	switch ( data.command ) {
-	case COMMAND_CONDITION:
-		break;
-	}
+	NetWorkRecv( _tcp_handle, _data_tcp->getPtr( ), _data_tcp->getSize( ) );
 }

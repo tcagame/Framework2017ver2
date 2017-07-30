@@ -4,9 +4,7 @@
 static const int TCP_PORT_NUM = 9850;
 static const int UDP_PORT_NUM = 9900;
 
-// ネットワークの状態確認時間
-static const int NETWORK_STATE_TIME = 1200;
-
+/*
 // TCP送信データ
 const unsigned char COMMAND_DUMMY		   = 0xF0; // ダミー
 const unsigned char COMMAND_CONDITION	   = 0xE0; // 接続確認
@@ -37,28 +35,16 @@ const unsigned char BUTTON_D    = 0x08; // INPUT_D ( 0b00001000 )
 const unsigned char BUTTON_E    = 0x10; // INPUT_E ( 0b00010000 )
 const unsigned char BUTTON_F    = 0x20; // INPUT_F ( 0b00100000 )
 
-
 const unsigned char NOT_EXIST = 0x00;
 const unsigned char EXIST = 0x01;
 
-const int MAX_MACHINE = 4;
+const int MAX_MACHINE = 10;
 
 #pragma pack( 1 )
 	struct SERVERDATA {
 		unsigned int command;
 		unsigned int value[ 3 ];
 	};
-
-	struct CLIENTDATA {
-		struct PLAYER {
-			unsigned int hp;
-			int x;
-			int y;
-			unsigned char exist;
-			unsigned int button;
-		};
-		unsigned char scene;
-		PLAYER player[ PLAYER_NUM ];
-	};
 #pragma pack( )
 	
+*/
