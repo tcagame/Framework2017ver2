@@ -31,6 +31,8 @@ public:
 	void setImageTarget( ImageTargetPtr image = ImageTargetPtr( ) );
 	void resetFPS( );
 	void flip( );
+	bool isOverFPS( ) const;
+	void skipFlipping( );
 private:
 	const char* _directory;
 	
@@ -40,6 +42,9 @@ private:
 	int _refresh_count;
 	int _start_time;
 	int _effekseer_fix_graph;
+	int _before_time;
+	bool _skip;
+	bool _over;
 	double _fps;
 
 	Vector _camera_up;

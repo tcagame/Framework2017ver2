@@ -11,8 +11,9 @@
 
 #include <assert.h>
 
-static const int REFRESH_COUNT = 60;	//平均を取るサンプル数
-static const int FPS = 30;
+static const int REFRESH_COUNT = 20;	//平均を取るサンプル数
+static const int FPS = 60;
+static const double FRAME_TIME = 1000.0 / FPS;
 
 DrawerPtr Drawer::getTask( ) {
 	ApplicationPtr fw = Application::getInstance( );
@@ -29,7 +30,9 @@ Drawer::~Drawer( ) {
 void Drawer::initialize( ) {
 	_refresh_count = 0;
 	_fps = FPS;
-	_start_time = 0;
+	_start_time = GetNowCount( );
+	_before_time = 0;
+	_skip = false;
 #if EFFECKSEER
 	_effekseer_fix_graph = LoadGraph( "../Resource/effecksser_fix.png" );
 #endif
@@ -94,30 +97,61 @@ void Drawer::resetFPS( ) {
 }
 
 void Drawer::flip( ) {
-	if ( _refresh_count == 0 ) {
-		_start_time = GetNowCount( );
-	}
-	if ( _refresh_count == REFRESH_COUNT ){ //60フレーム目なら平均を計算する
-		int frame_time_sum = GetNowCount( ) - _start_time;//かかった時間
-		double frame_time_avg = frame_time_sum / REFRESH_COUNT;//平均
+	//現在の時間
+	int now_time = GetNowCount( );
+
+	//60フレーム目なら平均を計算する
+	if ( _refresh_count >= REFRESH_COUNT && !_skip ) { 
+		//0フレーム目からの時間
+		int frame_time_sum = now_time - _start_time;
+		//平均の時間
+		double frame_time_avg = ( double )frame_time_sum / REFRESH_COUNT;
+		//fpsの計算
 		if ( frame_time_avg != 0.0 ) {
 			_fps = 1000.0 / frame_time_avg;
 		}
+		//再度0フレーム目から
 		_refresh_count = 0;
-		_start_time = GetNowCount( );
+		_start_time = now_time;
 	}
+
+	_over = false;
 	_refresh_count++;
 
-	int took_time = GetNowCount( ) - _start_time;	//かかった時間
-	int wait_time = _refresh_count * 1000 / FPS - took_time;	//待つべき時間
-	if ( wait_time > 0 ) {
-		Sleep( wait_time );	//待機
+	//0フレーム目からの時間
+	int took_time = now_time - _start_time;
+
+	//0フレーム目からの予想される時間
+	int game_time = ( int )( _refresh_count * FRAME_TIME );
+
+	//待つべき時間
+	int wait_time = game_time - took_time;
+
+	if ( wait_time >= 0 ) {
+		//待機
+		Sleep( wait_time );
+	} else {
+		//FPSをオーバーした
+		_over = true;
 	}
 	
-
-	ScreenFlip( );
-	ClearDrawScreen( );
+	if ( !_skip ) {
+		drawString( 0, 0, "%2f", _fps );
+		ScreenFlip( );
+		ClearDrawScreen( );
+	}
+	
+	_skip = false;
 }
+
+bool Drawer::isOverFPS( ) const {
+	return _over;
+}
+
+void Drawer::skipFlipping( ) {
+	_skip = true;
+}
+
 
 void Drawer::drawLine( int x1, int y1, int x2, int y2 ) const {
 	DrawLine( x1, y1, x2, y2, 0xFFFFFF ) ;

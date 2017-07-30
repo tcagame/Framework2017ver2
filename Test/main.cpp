@@ -18,21 +18,33 @@ public:
 
 	void initialize( ) {
 		DrawerPtr drawer = Drawer::getTask( );
-		drawer->setCameraUp( Vector( 0, 0, 1 ) );
-		drawer->setCamera( Vector( 0, -30, 30 ), Vector( ) );
+		//drawer->setCameraUp( Vector( 0, 0, 1 ) );
+		//drawer->setCamera( Vector( 0, -30, 30 ), Vector( ) );
 		_image = drawer->createImage( "sample.png" );
 		_image->setRect( 20, 20, 60, 40 ); // tx ty tw th
+
+		drawer->resetFPS( );
 	}
 
 	void update( ) {
 		DrawerPtr drawer = Drawer::getTask( );
+		// •`‰æ
+		drawer->flip( );
+		if ( drawer->isOverFPS( ) ) {
+			drawer->skipFlipping( );
+		} else {
+			_image->setPos( ( int )_image_pos.x, ( int )_image_pos.y );
+			for ( int i = 0; i < 1; i++ ) {
+				_image->draw( );
+			}
+		}
+
+		// ˆ—
 		DevicePtr device = Device::getTask( );
 		Vector stick( device->getDirX( ), device->getDirY( ) );
-		_image_pos += stick;
+		_image_pos += stick * 0.1;
 		
-		_image->setPos( ( int )_image_pos.x, ( int )_image_pos.y );
-		_image->draw( );
-		drawer->flip( );
+		
 	}
 private:
 	Vector _image_pos;
