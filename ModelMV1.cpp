@@ -2,6 +2,7 @@
 #include "DxLib.h"
 #include <assert.h>
 
+const int FRAME_INDEX = -1;
 
 ModelMV1::ModelMV1( ) :
 	_mesh( -1 ),
@@ -75,4 +76,23 @@ void ModelMV1::reset( ) {
 	_mesh = -1;
 	_anim = -1;
 	_time = 0;
+}
+
+bool ModelMV1::isHitLine( const Vector& begin, const Vector& end ) const {
+	//‚¢‚Á‚½‚ñ‹K’è’l‚É‚ ‚í‚¹‚é
+	MV1SetupCollInfo( _mesh, FRAME_INDEX );
+	VECTOR start_pos = VGet( (float)begin.x, (float)begin.y,(float)begin.z );
+	VECTOR end_pos = VGet( (float)end.x, (float)end.y, (float)end.z );
+	MV1_COLL_RESULT_POLY hit_poly = MV1CollCheck_Line( _mesh, FRAME_INDEX, start_pos, end_pos );
+	return hit_poly.HitFlag == 1;
+}
+
+bool ModelMV1::isHitSphere( const Vector& pos, const float radius ) const {
+	//‚¢‚Á‚½‚ñ‹K’è’l‚É‚ ‚í‚¹‚é
+	MV1SetupCollInfo( _mesh, FRAME_INDEX );
+	VECTOR center_pos = VGet( (float)pos.x, (float)pos.y,(float)pos.z );
+	MV1_COLL_RESULT_POLY_DIM hit_poly = MV1CollCheck_Sphere( _mesh, FRAME_INDEX, center_pos, radius );
+	bool result = hit_poly.HitNum > 0;
+	MV1CollResultPolyDimTerminate( hit_poly );
+	return result;
 }
