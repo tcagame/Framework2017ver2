@@ -55,6 +55,11 @@ void ModelMV1::draw( ) const {
 	MV1DetachAnim( _mesh, idx );
 }
 
+void ModelMV1::setTrans( const Matrix& matrix ) {
+	_trans_mat = matrix;
+}
+
+
 void ModelMV1::transferTransform( const Matrix& trans_mat ) {
 	_trans_mat = _trans_mat.multiply( trans_mat );
 }
