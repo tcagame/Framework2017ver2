@@ -12,7 +12,7 @@
 #include <assert.h>
 
 static const int REFRESH_COUNT = 60;	//•½‹Ï‚ğæ‚éƒTƒ“ƒvƒ‹”
-static const int FPS = 60;
+static const int FPS = 30;
 static const double FRAME_TIME = 1000.0 / FPS;
 
 DrawerPtr Drawer::getTask( ) {
