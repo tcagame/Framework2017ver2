@@ -21,6 +21,8 @@ public:
 	double getEndAnimTime( ) const;
 	bool isHitLine( const Vector& begin, const Vector& end ) const;
 	bool isHitSphere( const Vector& pos, const float radius ) const;
+	void setAnimTime( double time );
+	void setAnim( int anim );
 private:
 	int _mesh;
 	int _anim;

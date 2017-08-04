@@ -73,7 +73,7 @@ void ModelMV1::scaleTransform( const Matrix& scale_mat ) {
 }
 
 double ModelMV1::getEndAnimTime( ) const {
-	return MV1GetAnimTotalTime( _anim, 0 );
+	return MV1GetAnimTotalTime( _mesh, 0 );
 }
 
 void ModelMV1::reset( ) {
@@ -100,4 +100,12 @@ bool ModelMV1::isHitSphere( const Vector& pos, const float radius ) const {
 	bool result = hit_poly.HitNum > 0;
 	MV1CollResultPolyDimTerminate( hit_poly );
 	return result;
+}
+
+void ModelMV1::setAnimTime( double time ) {
+	_time = time;
+}
+
+void ModelMV1::setAnim( int anim ) {
+	_anim = anim;
 }
