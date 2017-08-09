@@ -197,6 +197,11 @@ void Drawer::setCamera( const Vector& pos, const Vector& target ) {
 #	endif
 }
 
+bool Drawer::isInCamera( const Vector& pos ) const {
+	DxLib::VECTOR dx_pos = VGet( float( pos.x ), float( pos.y ), float( pos.z ) );
+	return ( CheckCameraViewClip( dx_pos ) == FALSE ); // TRUE：画面外　FALSE：画面内が返ってくる
+}
+
 void Drawer::setImageTarget( ImageTargetPtr image ) {
 	if ( image == ImageTargetPtr( ) ) {
 		SetDrawScreen( DX_SCREEN_BACK );

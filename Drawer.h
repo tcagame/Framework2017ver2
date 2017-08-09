@@ -33,6 +33,7 @@ public:
 	void flip( );
 	bool isOverFPS( ) const;
 	void skipFlipping( );
+	bool isInCamera( const Vector& pos ) const;
 private:
 	const char* _directory;
 	
