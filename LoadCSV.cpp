@@ -25,7 +25,7 @@ LoadCSV::LoadCSV( const char* filename, int max_num ) {
 			_csv_data.push_back( filename );
 		}
 	}
-	assert( _csv_data.size( ) <= max_num );
+	assert( ( int )_csv_data.size( ) <= max_num );
 }
 
 std::string LoadCSV::getData( int index ) {

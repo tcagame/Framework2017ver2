@@ -49,9 +49,8 @@ void Drawer::drawEffect( int id, const Vector& pos, double size, const Vector& r
 # if EFFECKSEER
 		DrawGraph( 0, 0, _effekseer_fix_graph, TRUE );
 		int handle = PlayEffekseer3DEffect( id );
-		float size = ( float )size;
 		SetScalePlayingEffekseer3DEffect( handle,
-			size, size, size );
+			( float )size, ( float )size, ( float )size );
 		SetRotationPlayingEffekseer3DEffect( handle,
 			( float )rotate.x, ( float )rotate.y, ( float )rotate.z );
 		SetPosPlayingEffekseer3DEffect( handle,
