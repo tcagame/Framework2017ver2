@@ -44,7 +44,7 @@ Application::Application( ) {
 #	if EFFECKSEER
 		// DirectX9を使用するようにする。
 		// Effekseerを使用するには必ず設定する。
-		SetUseDirect3DVersion(DX_DIRECT3D_9);
+		//SetUseDirect3DVersion(DX_DIRECT3D_9);
 		
 		// フルスクリーンウインドウの切り替えでリソースが消えるのを防ぐ。
 		// Effekseerを使用する場合は必ず設定する。
