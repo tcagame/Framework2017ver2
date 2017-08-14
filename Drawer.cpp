@@ -34,7 +34,8 @@ void Drawer::initialize( ) {
 	_before_time = 0;
 	_skip = false;
 #if EFFECKSEER
-	_effekseer_fix_graph = LoadGraph( "../Resource/effecksser_fix.png" );
+	_effekseer_fix_graph = LoadGraph( "Resource/effekseer_fix.png" );
+	DrawGraph( 0, 0, _effekseer_fix_graph, TRUE );
 #endif
 }
 
@@ -47,7 +48,6 @@ void Drawer::drawCircle( const Vector& pos, const double radius ) const {
 
 void Drawer::drawEffect( int id, const Vector& pos, double size, const Vector& rotate ) const {
 # if EFFECKSEER
-		DrawGraph( 0, 0, _effekseer_fix_graph, TRUE );
 		int handle = PlayEffekseer3DEffect( id );
 		SetScalePlayingEffekseer3DEffect( handle,
 			( float )size, ( float )size, ( float )size );
