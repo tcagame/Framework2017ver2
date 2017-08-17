@@ -17,6 +17,7 @@
     <ClCompile Include="LoadCSV.cpp" />
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="ImageTarget.cpp" />
+    <ClCompile Include="Effect.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Keyboard.h" />
@@ -38,5 +39,6 @@
     <ClInclude Include="Image.h" />
     <ClInclude Include="ImageTarget.h" />
     <ClInclude Include="Data.h" />
+    <ClInclude Include="Effect.h" />
   </ItemGroup>
 </Project>

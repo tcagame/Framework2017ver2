@@ -24,6 +24,7 @@
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="Device.cpp" />
     <ClCompile Include="Drawer.cpp" />
+    <ClCompile Include="Effect.cpp" />
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="ImageTarget.cpp" />
     <ClCompile Include="Keyboard.cpp" />
@@ -43,6 +44,7 @@
     <ClInclude Include="Data.h" />
     <ClInclude Include="Device.h" />
     <ClInclude Include="Drawer.h" />
+    <ClInclude Include="Effect.h" />
     <ClInclude Include="Image.h" />
     <ClInclude Include="ImageTarget.h" />
     <ClInclude Include="Keyboard.h" />

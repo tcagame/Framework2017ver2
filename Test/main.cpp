@@ -4,6 +4,7 @@
 #include "ModelMV1.h"
 #include "Device.h"
 #include "Image.h"
+#include"Effect.h"
 
 class Test : public Task {
 public:
@@ -17,30 +18,37 @@ public:
 	
 	void initialize( ) {
 		DrawerPtr drawer = Drawer::getTask( );
-		drawer->setCameraUp( Vector( 0, 2, 0 ) );
-		drawer->setCamera( Vector( 30, 130, 30 ), Vector( ) );
-		drawer->loadEffect( 0, "laser.efk" );
+		drawer->setCameraUp( Vector( 1, 1, 1 ) );
+		drawer->setCamera( Vector( 100, 200, 50 ), Vector( 1,1,1 ) );
 		drawer->resetFPS( );
+		EffectPtr effect = Effect::getTask( );
+		_effect_handle = effect->loadEffect( 0, "laser.efk" );
+		effect->playEffect( _effect_handle );
 	}
 
 	void update( ) {
 		DrawerPtr drawer = Drawer::getTask( );
+		EffectPtr effect = Effect::getTask( );
 		// •`‰æ
+		effect->updateEffectTransform( _effect_handle, Vector( ) );
 		drawer->flip( );
 		if ( drawer->isOverFPS( ) ) {
 			drawer->skipFlipping( );
 		} else {
-			drawer->drawEffect( 0, Vector( ), 1.0 );
-		}		
+			effect->drawEffect( );
+		}
 	}
 private:
+	int _effect_handle;
 };
 
 void main( ) {
-	TaskPtr test = TaskPtr( new Test( ) );
 	TaskPtr drawer = TaskPtr( new Drawer( "Resource" ) );
+	TaskPtr effect = TaskPtr( new Effect( "Resource" ) );
+	TaskPtr test = TaskPtr( new Test( ) );
 
 	ApplicationPtr app = Application::getInstance( );
-	app->addTask( Test::getTag( ), test );
 	app->addTask( Drawer::getTag( ), drawer );
+	app->addTask( Effect::getTag( ), effect );
+	app->addTask( Test::getTag( ), test );
 }
