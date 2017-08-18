@@ -99,3 +99,7 @@ void Effect::drawEffect( ) const {
 	// Effekseerにより再生中のエフェクトを描画する。
 	DrawEffekseer3D( );
 }
+
+void Effect::stopEffect( int effect_handle ) const {
+	StopEffekseer3DEffect( effect_handle );
+}
