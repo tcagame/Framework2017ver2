@@ -17,6 +17,8 @@ public:
 	void rotateTransform( const Matrix& rot_mat );
 	void scaleTransform( const Matrix& scale_mat );
 	void setTrans( const Matrix& matrix );
+	void setRot( const Matrix& matrix );
+	void setScale( const Matrix& matrix );
 	void reset( );
 	double getEndAnimTime( ) const;
 	bool isHitLine( const Vector& begin, const Vector& end ) const;

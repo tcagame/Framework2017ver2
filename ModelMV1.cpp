@@ -59,6 +59,13 @@ void ModelMV1::setTrans( const Matrix& matrix ) {
 	_trans_mat = matrix;
 }
 
+void ModelMV1::setRot( const Matrix& matrix ) {
+	_rot_mat = matrix;
+}
+
+void ModelMV1::setScale( const Matrix& matrix ) {
+	_scale_mat = matrix;
+}
 
 void ModelMV1::transferTransform( const Matrix& trans_mat ) {
 	_trans_mat = _trans_mat.multiply( trans_mat );
