@@ -21,6 +21,7 @@ public:
 	void setScale( const Matrix& matrix );
 	void reset( );
 	double getEndAnimTime( ) const;
+	Vector getHitPos( const Vector& begin, const Vector& end ) const;
 	bool isHitLine( const Vector& begin, const Vector& end ) const;
 	bool isHitSphere( const Vector& pos, const float radius ) const;
 	void setAnimTime( double time );
