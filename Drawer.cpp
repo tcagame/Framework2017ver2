@@ -87,6 +87,13 @@ ImagePtr Drawer::createImage( const char* filename ) const {
 	if ( image->load( path ) ) {
 		result = image;
 	}
+	if ( !result ) {
+		path = "../" + path;
+		if ( image->load( path ) ) {
+			result = image;
+		}
+	}
+		
 	return result;
 }
 

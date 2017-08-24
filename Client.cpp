@@ -61,6 +61,9 @@ void Client::updateConnecting( ) {
 bool Client::load( ) {
 	int fh = FileRead_open( "IP.ini" );
 	if ( fh == 0 ) {
+		fh = FileRead_open( "../IP.ini" );
+	}
+	if ( fh == 0 ) {
 		return false;
 	}
 
