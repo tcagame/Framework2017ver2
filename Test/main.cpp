@@ -31,12 +31,9 @@ public:
 		EffectPtr effect = Effect::getTask( );
 		// •`‰æ
 		effect->updateEffectTransform( _effect_handle, Vector( ) );
+		drawer->waitForSync( );
 		drawer->flip( );
-		if ( drawer->isOverFPS( ) ) {
-			drawer->skipFlipping( );
-		} else {
-			effect->drawEffect( );
-		}
+		effect->drawEffect( );
 	}
 private:
 	int _effect_handle;

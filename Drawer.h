@@ -30,9 +30,8 @@ public:
 	void setCamera( const Vector& pos, const Vector& target );
 	void setImageTarget( ImageTargetPtr image = ImageTargetPtr( ) );
 	void resetFPS( );
+	void waitForSync( );
 	void flip( );
-	bool isOverFPS( ) const;
-	void skipFlipping( );
 	bool isInCamera( const Vector& pos ) const;
 private:
 	const char* _directory;
@@ -44,8 +43,6 @@ private:
 	int _start_time;
 	int _effekseer_fix_graph;
 	int _before_time;
-	bool _skip;
-	bool _over;
 	double _fps;
 
 	Vector _camera_up;

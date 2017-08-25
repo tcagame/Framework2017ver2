@@ -32,7 +32,6 @@ void Drawer::initialize( ) {
 	_fps = FPS;
 	_start_time = GetNowCount( );
 	_before_time = 0;
-	_skip = false;
 #if EFFECKSEER
 	_effekseer_fix_graph = LoadGraph( "Resource/effekseer_fix.png" );
 	DrawGraph( 0, 0, _effekseer_fix_graph, TRUE );
@@ -101,7 +100,7 @@ void Drawer::resetFPS( ) {
 	_refresh_count = 0;
 }
 
-void Drawer::flip( ) {
+void Drawer::waitForSync( ) {
 	//現在の時間
 	int now_time = GetNowCount( );
 	if ( _refresh_count == 0 ) {
@@ -109,7 +108,7 @@ void Drawer::flip( ) {
 	}
 
 	//60フレーム目なら平均を計算する
-	if ( _refresh_count >= REFRESH_COUNT && !_skip ) { 
+	if ( _refresh_count >= REFRESH_COUNT ) { 
 		//0フレーム目からの時間
 		int frame_time_sum = now_time - _start_time;
 		//平均の時間
@@ -123,8 +122,6 @@ void Drawer::flip( ) {
 		_start_time = now_time;
 	}
 
-	_over = false;
-
 	//0フレーム目からの時間
 	int took_time = now_time - _start_time;
 
@@ -134,32 +131,18 @@ void Drawer::flip( ) {
 	//待つべき時間
 	int wait_time = game_time - took_time;
 
-	if ( wait_time >= 0 ) {
+	if ( wait_time > 0 ) {
 		//待機
 		Sleep( wait_time );
 	}
-	if ( ( int )( wait_time / FRAME_TIME ) < 0 ) {
-		//FPSをオーバーした
-		_over = true;
-	}
-	
-	if ( !_skip ) {
-		ScreenFlip( );
-		ClearDrawScreen( );
-	}
-	
-	_skip = false;
+
 	_refresh_count++;
 }
 
-bool Drawer::isOverFPS( ) const {
-	return _over;
+void Drawer::flip( ) {
+	ScreenFlip( );
+	ClearDrawScreen( );
 }
-
-void Drawer::skipFlipping( ) {
-	_skip = true;
-}
-
 
 void Drawer::drawLine( int x1, int y1, int x2, int y2 ) const {
 	DrawLine( x1, y1, x2, y2, 0xFFFFFF ) ;
