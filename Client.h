@@ -22,6 +22,7 @@ public:
 public:
 	std::string getPhase( ) const;
 	void sendTcp( DataPtr data );
+	bool isRecievingUDP( ) const;
 private:
 	enum PHASE {
 		PHASE_READY,
@@ -30,7 +31,6 @@ private:
 private:
 	void updateReady( );
 	void updateConnecting( );
-	void updateOffline( );
 	bool load( );
 	bool connect( );
 	void recieveUdp( );
@@ -43,5 +43,6 @@ private:
 	int _tcp_handle;
 	int _udp_handle;
 	int _network_state_time;
+	bool _recieving_udp;
 };
 

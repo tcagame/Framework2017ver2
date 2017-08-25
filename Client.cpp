@@ -11,7 +11,8 @@ ClientPtr Client::getTask( ) {
 
 Client::Client( DataPtr data_udp, DataPtr data_tcp ) :
 _data_udp( data_udp ),
-_data_tcp( data_tcp ) {
+_data_tcp( data_tcp ),
+_recieving_udp( false ) {
 	_phase = PHASE_READY;
 
 	// Server IP “Ç‚Ýž‚Ý
@@ -119,8 +120,10 @@ void Client::sendTcp( DataPtr data ) {
 }
 
 void Client::recieveUdp( ) {
+	_recieving_udp = false;
 	while ( CheckNetWorkRecvUDP( _udp_handle ) == TRUE ) {
 		NetWorkRecvUDP( _udp_handle, NULL, NULL, _data_udp->getPtr( ), _data_udp->getSize( ), FALSE );
+		_recieving_udp = true;
 	}
 }
 
@@ -147,4 +150,8 @@ void Client::recieveTcp( ) {
 
 	// ŽóM
 	NetWorkRecv( _tcp_handle, _data_tcp->getPtr( ), _data_tcp->getSize( ) );
+}
+
+bool Client::isRecievingUDP( ) const {
+	return _recieving_udp;
 }
