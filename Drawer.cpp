@@ -2,6 +2,7 @@
 #include "Application.h"
 #include "DxLib.h"
 #include "Image.h"
+#include "Movie.h"
 #include "ImageTarget.h"
 
 #if EFFECKSEER
@@ -95,6 +96,26 @@ ImagePtr Drawer::createImage( const char* filename ) const {
 		
 	return result;
 }
+
+MoviePtr Drawer::createMovie( const char* filename ) const {
+	MoviePtr result = MoviePtr( );
+	std::string path = _directory;
+	path += "/";
+	path +=  filename;
+	MoviePtr movie = MoviePtr( new Movie );
+	if ( movie->load( path ) ) {
+		result = movie;
+	}
+	if ( !result ) {
+		path = "../" + path;
+		if ( movie->load( path ) ) {
+			result = movie;
+		}
+	}
+		
+	return result;
+}
+
 
 void Drawer::resetFPS( ) {
 	_refresh_count = 0;

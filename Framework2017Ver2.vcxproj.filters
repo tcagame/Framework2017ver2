@@ -18,11 +18,11 @@
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="ImageTarget.cpp" />
     <ClCompile Include="Effect.cpp" />
+    <ClCompile Include="Movie.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Keyboard.h" />
     <ClInclude Include="mathmatics.h" />
-    <ClInclude Include="Mouse.h" />
     <ClInclude Include="Network.h" />
     <ClInclude Include="Server.h" />
     <ClInclude Include="smart_ptr.h" />
@@ -40,5 +40,7 @@
     <ClInclude Include="ImageTarget.h" />
     <ClInclude Include="Data.h" />
     <ClInclude Include="Effect.h" />
+    <ClInclude Include="Mouse.h" />
+    <ClInclude Include="Movie.h" />
   </ItemGroup>
 </Project>

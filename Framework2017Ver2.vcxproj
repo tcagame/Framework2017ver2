@@ -32,6 +32,7 @@
     <ClCompile Include="ModelMDL.cpp" />
     <ClCompile Include="ModelMV1.cpp" />
     <ClCompile Include="Mouse.cpp" />
+    <ClCompile Include="Movie.cpp" />
     <ClCompile Include="Server.cpp" />
     <ClCompile Include="Sound.cpp" />
     <ClCompile Include="Task.cpp" />
@@ -53,6 +54,7 @@
     <ClInclude Include="ModelMDL.h" />
     <ClInclude Include="ModelMV1.h" />
     <ClInclude Include="Mouse.h" />
+    <ClInclude Include="Movie.h" />
     <ClInclude Include="Network.h" />
     <ClInclude Include="Server.h" />
     <ClInclude Include="smart_ptr.h" />

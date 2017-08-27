@@ -7,6 +7,7 @@
 PTR( Drawer );
 PTR( Model );
 PTR( Image );
+PTR( Movie );
 PTR( ImageTarget );
 
 class Drawer : public Task {
@@ -23,6 +24,7 @@ public:
 	void drawEffect( int id_, const Vector& pos_, double size_ = 1.0, const Vector& rotate_ = Vector( ) ) const;
 	void loadEffect( int id, const char* filename );
 	ImagePtr createImage( const char* filename ) const;
+	MoviePtr createMovie( const char* filename ) const;
 	void drawString( int x, int y, const char* string, ... ) const;
 	void drawLine( int x1, int y1, int x2, int y2 ) const;
 	void drawLine( const Vector& pos1, const Vector& pos2 ) const;
