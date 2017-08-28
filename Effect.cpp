@@ -93,6 +93,7 @@ void Effect::updateEffectTransform( const int effect_handle, const Vector& pos, 
 }
 
 void Effect::drawEffect( ) const {
+	Effekseer_Sync3DSetting( );
 	// Effekseerにより再生中のエフェクトを更新する。
 	UpdateEffekseer3D( );
 
