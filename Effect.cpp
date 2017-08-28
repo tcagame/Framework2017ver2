@@ -66,7 +66,7 @@ void Effect::finalize( ) {
 void Effect::update( ) {
 }
 
-int Effect::loadEffect( int effect_id, const char * filename ) const {
+int Effect::loadEffect( const char * filename ) const {
 	std::string path = _directory;
 	path += "/";
 	path +=  filename;

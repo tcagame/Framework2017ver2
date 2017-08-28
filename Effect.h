@@ -27,7 +27,7 @@ public:
 	void update( );
 	void initialize( );
 	void finalize( );
-	int loadEffect( int effect_id, const char * filename ) const; // ロードしたエフェクトのidを返す
+	int loadEffect( const char * filename ) const; // ロードしたエフェクトのidを返す
 	int playEffect( const int effect_handle ); // 再生したエフェクトのhandleを返す
 	void updateEffectTransform( const int effect_handle, const Vector& pos, const double size = 1.0, const Vector& rotate = Vector( ) ) const; // 再生中のエフェクトのtransを変更
 	void drawEffect( ) const;
