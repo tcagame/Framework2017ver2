@@ -19,11 +19,7 @@ LoadCSV::LoadCSV( const char* filename, int max_num ) {
 		std::string filename = buffer;
 		int index = (int)filename.find(",");
 		filename = filename.substr( 0, index );
-		if ( filename == "" ) {
-			_csv_data.push_back( _csv_data[ 0 ] );
-		} else {
-			_csv_data.push_back( filename );
-		}
+		_csv_data.push_back( filename );
 	}
 	assert( ( int )_csv_data.size( ) <= max_num );
 }
