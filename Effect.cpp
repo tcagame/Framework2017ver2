@@ -38,6 +38,17 @@ void Effect::initialize( ) {
 	// DirectX9を使用するようにする。
 	// Effekseerを使用するには必ず設定する。
 	//SetUseDirect3DVersion(DX_DIRECT3D_9);
+
+
+	// Effekseerを初期化する。
+	// 引数には画面に表示する最大パーティクル数を設定する。
+	//if ( DxLib_Init( ) == -1 ) {
+	//	return;
+	//}
+	if ( Effkseer_Init( PARTICLE ) == -1 ) {
+		return;
+	}
+
 		
 	// フルスクリーンウインドウの切り替えでリソースが消えるのを防ぐ。
 	// Effekseerを使用する場合は必ず設定する。
@@ -45,19 +56,16 @@ void Effect::initialize( ) {
 
 	// DXライブラリのデバイスロストした時のコールバックを設定する。
 	// ウインドウとフルスクリーンの切り替えが発生する場合は必ず実行する。
-	Effekseer_SetGraphicsDeviceLostCallbackFunctions( );
+	// ただし、DirectX11を使用する場合は実行する必要はない。
+	Effekseer_SetGraphicsDeviceLostCallbackFunctions();
 
-	// Effekseerを初期化する。
-	// 引数には画面に表示する最大パーティクル数を設定する。
-	assert( DxLib_Init( ) == 0 );
-	assert( Effkseer_Init( PARTICLE ) == 0 );
 
 	std::string path = _directory;
 	path += "/";
 	path += "effekseer_fix.png";
-	int effekseer_graph = LoadGraph( path.c_str( ) );
-	assert( effekseer_graph >= 0 );
-	DrawGraph( 0, 0, effekseer_graph, TRUE );
+	_effekseer_graph = LoadGraph( path.c_str( ) );
+	assert( _effekseer_graph >= 0 );
+	DrawGraph( 0, 0, _effekseer_graph, TRUE );
 }
 
 void Effect::finalize( ) {
@@ -93,7 +101,12 @@ void Effect::updateEffectTransform( const int effect_handle, const Vector& pos, 
 }
 
 void Effect::drawEffect( ) const {
+	DrawGraph( 0, 0, _effekseer_graph, TRUE );
+	RenderVertex( );
+
+	// EffekseerをDxLibのカメラと同期させる
 	Effekseer_Sync3DSetting( );
+
 	// Effekseerにより再生中のエフェクトを更新する。
 	UpdateEffekseer3D( );
 

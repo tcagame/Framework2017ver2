@@ -34,5 +34,6 @@ public:
 	void stopEffect( int effect_handle ) const;
 private:
 	const char * _directory;
+	int _effekseer_graph;
 };
 

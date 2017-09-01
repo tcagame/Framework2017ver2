@@ -4,7 +4,7 @@
 #include "ModelMV1.h"
 #include "Device.h"
 #include "Image.h"
-#include"Effect.h"
+#include "Effect.h"
 
 class Test : public Task {
 public:
@@ -22,7 +22,7 @@ public:
 		drawer->setCamera( Vector( 100, 200, 50 ), Vector( 1,1,1 ) );
 		drawer->resetFPS( );
 		EffectPtr effect = Effect::getTask( );
-		_effect_handle = effect->loadEffect( 0, "laser.efk" );
+		_effect_handle = effect->loadEffect( "laser.efk" );
 		effect->playEffect( _effect_handle );
 	}
 
