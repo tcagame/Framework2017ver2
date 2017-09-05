@@ -53,27 +53,33 @@ void Device::resetup( ) {
 }
 
 char Device::getDirX( int idx ) const {
+	if ( idx < 0 ) return 0;
 	return _data[ idx ].x;
 }
 
 char Device::getDirY( int idx ) const {
+	if ( idx < 0 ) return 0;
 	return _data[ idx ].y;
 }
 
 char Device::getRightDirX( int idx ) const {
+	if ( idx < 0 ) return 0;
 	return _data[ idx ].rx;
 }
 
 char Device::getRightDirY( int idx ) const {
+	if ( idx < 0 ) return 0;
 	return _data[ idx ].ry;
 }
 
 
 unsigned char Device::getButton( int idx ) const {
+	if ( idx < 0 ) return 0;
 	return _data[ idx ].button;
 }
 
 unsigned char Device::getPush( int idx ) const {
+	if ( idx < 0 ) return 0;
 	return _data[ idx ].push;
 }
 
@@ -177,25 +183,25 @@ void Device::updateJoypad( ) {
 		unsigned char button = _data[ i ].button;
 		_data[ i ].button = 0;
 		_data[ i ].push = 0;
-		if ( ( key & PAD_INPUT_A ) != 0 ) { 
+		if ( ( key & PAD_INPUT_1 ) != 0 ) { 
 			_data[ i ].button |= BUTTON_A;
 			if ( ( button & BUTTON_A ) == 0 ) {
 				_data[ i ].push |= BUTTON_A;
 			}
 		}
-		if ( ( key & PAD_INPUT_B ) != 0 ) { 
+		if ( ( key & PAD_INPUT_2 ) != 0 ) { 
 			_data[ i ].button |= BUTTON_B;
 			if ( ( button & BUTTON_B ) == 0 ) {
 				_data[ i ].push |= BUTTON_B;
 			}
 		}
-		if ( ( key & PAD_INPUT_C ) != 0 ) { 
+		if ( ( key & PAD_INPUT_3 ) != 0 ) { 
 			_data[ i ].button |= BUTTON_C;
 			if ( ( button & BUTTON_C ) == 0 ) {
 				_data[ i ].push |= BUTTON_C;
 			}
 		}
-		if ( ( key & PAD_INPUT_X ) != 0 ) { 
+		if ( ( key & PAD_INPUT_4 ) != 0 ) { 
 			_data[ i ].button |= BUTTON_D;
 			if ( ( button & BUTTON_D ) == 0 ) {
 				_data[ i ].push |= BUTTON_D;
