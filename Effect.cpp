@@ -29,12 +29,6 @@ handle( -1 ) {
 
 Effect::Effect( const char * directory ) :
 _directory( directory ) {
-}
-
-Effect::~Effect( ) {
-}
-
-void Effect::initialize( ) {
 	// DirectX9を使用するようにする。
 	// Effekseerを使用するには必ず設定する。
 	//SetUseDirect3DVersion(DX_DIRECT3D_9);
@@ -68,7 +62,14 @@ void Effect::initialize( ) {
 	DrawGraph( 0, 0, _effekseer_graph, TRUE );
 }
 
+Effect::~Effect( ) {
+}
+
+void Effect::initialize( ) {
+}
+
 void Effect::finalize( ) {
+	Effkseer_End( );
 }
 
 void Effect::update( ) {
