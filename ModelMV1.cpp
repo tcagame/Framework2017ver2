@@ -12,6 +12,9 @@ ModelMV1::ModelMV1( ) :
 
 
 ModelMV1::~ModelMV1( ) {
+	if ( _mesh >= 0 ) {
+		MV1DeleteModel( _mesh );
+	}
 }
 
 void ModelMV1::load( const char* filename ) {
