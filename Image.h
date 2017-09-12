@@ -22,6 +22,9 @@ public:
 	void setRect( int tx = -1, int ty = -1, int tw = -1, int th = -1 );
 	void setPos( const int sx1, const int sy1, const int sx2 = -1, const int sy2 = -1 );
 	void getImageSize( int& width, int& height ) const;
+	void createGraph( int width, int height );
+	void drawSpriteToGraph( ImagePtr image );
+	void clearToGraph( );
 	int getHandle( ) const;
 protected:
 	void setHandle( int handle );
