@@ -83,39 +83,3 @@ void Image::setHandle( int handle ) {
 	_handle = handle;
 }
 
-void Image::createGraph( int width, int height ) {
-	_handle = MakeScreen( width, height, TRUE );
-}
-
-void Image::drawSpriteToGraph( ImagePtr image ) {
-	SetDrawScreen( _handle );
-
-	switch ( image->_blend ) {
-	case BLEND_ALPHA:
-		SetDrawBlendMode( DX_BLENDMODE_ALPHA, ( int )( 255 * image->_ratio ) );
-		break;
-	case BLEND_ADD:
-		SetDrawBlendMode( DX_BLENDMODE_ADD  , ( int )( 255 * image->_ratio ) );
-		break;
-	}
-
-	if ( image->_tw < 0 ) {
-		DrawGraph( image->_sx1, image->_sy1, _handle, TRUE );
-	} else if ( image->_sy2 < 0 ) {
-		DrawRectGraph( image->_sx1, image->_sy1, image->_tx, image->_ty, image->_tw, image->_th, image->_handle, TRUE, FALSE );
-	} else {
-		DrawRectExtendGraph( image->_sx1, image->_sy1, image->_sx2, image->_sy2, image->_tx, image->_ty, image->_tw, image->_th, image->_handle, TRUE );
-	}
-
-	if ( image->_blend != BLEND_NONE ) {
-		SetDrawBlendMode( DX_BLENDMODE_NOBLEND, 0 );
-	}
-
-	SetDrawScreen( DX_SCREEN_BACK );
-}
-
-void Image::clearToGraph( ) {
-	SetDrawScreen( _handle );
-	ClearDrawScreen( );
-	SetDrawScreen( DX_SCREEN_BACK );
-}
