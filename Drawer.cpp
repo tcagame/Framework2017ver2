@@ -46,6 +46,11 @@ void Drawer::drawCircle( const Vector& pos, const double radius ) const {
 	DrawCircle( ( int )pos.x, ( int )pos.y, ( int )radius, GetColor( 255, 0, 0 ), 0, 3 );
 }
 
+void Drawer::drawSphere( const Vector& pos, const double radius ) const {
+	DxLib::VECTOR dx_pos = VGet( float( pos.x ), float( pos.y ), float( pos.z ) );
+	DrawSphere3D( dx_pos, ( float )radius, 10, GetColor( 255, 0, 0 ), GetColor( 255, 255, 255 ), FALSE );
+}
+
 void Drawer::drawEffect( int id, const Vector& pos, double size, const Vector& rotate ) const {
 # if EFFECKSEER
 		int handle = PlayEffekseer3DEffect( id );

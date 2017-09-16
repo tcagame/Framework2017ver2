@@ -114,3 +114,7 @@ void Sound::stopAllSE( ) {
 		it++;
 	}
 }
+
+bool Sound::isPlayingBGM( ) {
+	return CheckSoundMem( _bgm ) == 1;
+}

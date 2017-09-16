@@ -21,6 +21,7 @@ public:
 	void initialize( );
 	void update( );
 	void drawCircle( const Vector& pos, const double radius ) const;
+	void drawSphere( const Vector& pos, const double radius ) const;
 	void drawEffect( int id_, const Vector& pos_, double size_ = 1.0, const Vector& rotate_ = Vector( ) ) const;
 	void loadEffect( int id, const char* filename );
 	ImagePtr createImage( const char* filename ) const;
