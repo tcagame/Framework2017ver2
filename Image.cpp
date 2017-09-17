@@ -29,6 +29,11 @@ bool Image::load( std::string path ) {
 	return true;
 }
 
+void Image::setBlend( BLEND blend, double ratio ) {
+	_ratio = ratio;
+	_blend = blend;
+}
+
 void Image::draw( ) const{
 	switch ( _blend ) {
 	case BLEND_ALPHA:

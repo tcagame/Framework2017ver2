@@ -23,6 +23,7 @@ public:
 	void setPos( const int sx1, const int sy1, const int sx2 = -1, const int sy2 = -1 );
 	void getImageSize( int& width, int& height ) const;
 	int getHandle( ) const;
+	void setBlend( BLEND blend, double ratio );
 protected:
 	void setHandle( int handle );
 private:
