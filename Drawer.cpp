@@ -32,7 +32,9 @@ void Drawer::initialize( ) {
 	_refresh_count = 0;
 	_fps = FPS;
 	_start_time = GetNowCount( );
+	_fps_start_time = _start_time;
 	_before_time = 0;
+	_fps_count = 0;
 #if EFFECKSEER
 	_effekseer_fix_graph = LoadGraph( "Resource/effekseer_fix.png" );
 	DrawGraph( 0, 0, _effekseer_fix_graph, TRUE );
@@ -40,6 +42,21 @@ void Drawer::initialize( ) {
 }
 
 void Drawer::update( ) {
+	if ( _fps_count >= FPS ) {
+		int now = GetNowCount( );
+		//0フレーム目からの時間
+		int frame_time_sum = now - _fps_start_time;
+		//平均の時間
+		double frame_time_avg = ( double )frame_time_sum / FPS;
+		//fpsの計算
+		if ( frame_time_avg != 0.0 ) {
+			_fps = 1000.0 / frame_time_avg;
+		}
+		_fps_start_time = now;
+		_fps_count = 0;
+	} else {
+		_fps_count++;
+	}
 }
 
 void Drawer::drawCircle( const Vector& pos, const double radius ) const {
@@ -135,14 +152,6 @@ void Drawer::waitForSync( ) {
 
 	//60フレーム目なら平均を計算する
 	if ( _refresh_count >= REFRESH_COUNT ) { 
-		//0フレーム目からの時間
-		int frame_time_sum = now_time - _start_time;
-		//平均の時間
-		double frame_time_avg = ( double )frame_time_sum / REFRESH_COUNT;
-		//fpsの計算
-		if ( frame_time_avg != 0.0 ) {
-			_fps = 1000.0 / frame_time_avg;
-		}
 		//再度0フレーム目から
 		_refresh_count = 0;
 		_start_time = now_time;
@@ -210,6 +219,10 @@ void Drawer::setCamera( const Vector& pos, const Vector& target ) {
 		// DXライブラリのカメラとEffekseerのカメラを同期する。
 		Effekseer_Sync3DSetting();
 #	endif
+}
+
+double Drawer::getFps( ) {
+	return _fps;
 }
 
 bool Drawer::isInCamera( const Vector& pos ) const {

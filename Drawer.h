@@ -35,6 +35,7 @@ public:
 	void resetFPS( );
 	void waitForSync( );
 	void flip( );
+	double getFps( );
 	bool isInCamera( const Vector& pos ) const;
 private:
 	const char* _directory;
@@ -47,6 +48,8 @@ private:
 	int _effekseer_fix_graph;
 	int _before_time;
 	double _fps;
+	int _fps_count;
+	int _fps_start_time;
 
 	Vector _camera_up;
 };
