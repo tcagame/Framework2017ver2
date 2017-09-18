@@ -94,28 +94,20 @@ void ModelMV1::reset( ) {
 	_time = 0;
 }
 
-Vector ModelMV1::getHitPos( const Vector& begin, const Vector& end ) const {
-	MV1RefreshCollInfo( _mesh, FRAME_INDEX );
-	Vector result = Vector( );
-	VECTOR start_pos = VGet( (float)begin.x, (float)begin.y,(float)begin.z );
-	VECTOR end_pos = VGet( (float)end.x, (float)end.y, (float)end.z );
-	MV1_COLL_RESULT_POLY hit_poly = MV1CollCheck_Line( _mesh, FRAME_INDEX, start_pos, end_pos );
-	if ( hit_poly.HitFlag == 1 ) {
-		result = Vector( ( double )hit_poly.HitPosition.x, ( double )hit_poly.HitPosition.y, ( double )hit_poly.HitPosition.z );
-		if ( result.isOrijin( ) ) {
-			result = begin;
-		}
-	}
-	return result;
+Vector ModelMV1::getHitPos( ) const {
+	return _hit_pos;
 }
 
 
-bool ModelMV1::isHitLine( const Vector& begin, const Vector& end ) const {
+bool ModelMV1::isHitLine( const Vector& begin, const Vector& end ) {
 	//‚¢‚Á‚½‚ñ‹K’è’l‚É‚ ‚í‚¹‚é
 	MV1SetupCollInfo( _mesh, FRAME_INDEX );
 	VECTOR start_pos = VGet( (float)begin.x, (float)begin.y,(float)begin.z );
 	VECTOR end_pos = VGet( (float)end.x, (float)end.y, (float)end.z );
 	MV1_COLL_RESULT_POLY hit_poly = MV1CollCheck_Line( _mesh, FRAME_INDEX, start_pos, end_pos );
+	if ( hit_poly.HitFlag == 1 ) {
+		_hit_pos = Vector( ( double )hit_poly.HitPosition.x, ( double )hit_poly.HitPosition.y, ( double )hit_poly.HitPosition.z );
+	}
 	return hit_poly.HitFlag == 1;
 }
 

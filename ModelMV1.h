@@ -21,8 +21,8 @@ public:
 	void setScale( const Matrix& matrix );
 	void reset( );
 	double getEndAnimTime( ) const;
-	Vector getHitPos( const Vector& begin, const Vector& end ) const;
-	bool isHitLine( const Vector& begin, const Vector& end ) const;
+	Vector getHitPos( ) const;
+	bool isHitLine( const Vector& begin, const Vector& end );
 	bool isHitSphere( const Vector& pos, const float radius ) const;
 	void setAnimTime( double time );
 	void setAnim( int anim );
@@ -30,6 +30,7 @@ private:
 	int _mesh;
 	int _anim;
 	double _time;
+	Vector _hit_pos;
 	Matrix _trans_mat;
 	Matrix _rot_mat;
 	Matrix _scale_mat;
