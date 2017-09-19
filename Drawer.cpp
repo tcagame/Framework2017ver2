@@ -5,11 +5,6 @@
 #include "Movie.h"
 #include "ImageTarget.h"
 
-#if EFFECKSEER
-	// EffekseerForDXLib.hをインクルードします。
-#	include "EffekseerForDXLib.h"
-#endif
-
 #include <assert.h>
 
 static const int REFRESH_COUNT = 60;	//平均を取るサンプル数
@@ -35,10 +30,6 @@ void Drawer::initialize( ) {
 	_fps_start_time = _start_time;
 	_before_time = 0;
 	_fps_count = 0;
-#if EFFECKSEER
-	_effekseer_fix_graph = LoadGraph( "Resource/effekseer_fix.png" );
-	DrawGraph( 0, 0, _effekseer_fix_graph, TRUE );
-#endif
 }
 
 void Drawer::update( ) {
@@ -66,38 +57,6 @@ void Drawer::drawCircle( const Vector& pos, const double radius ) const {
 void Drawer::drawSphere( const Vector& pos, const double radius ) const {
 	DxLib::VECTOR dx_pos = VGet( float( pos.x ), float( pos.y ), float( pos.z ) );
 	DrawSphere3D( dx_pos, ( float )radius, 10, GetColor( 255, 0, 0 ), GetColor( 255, 255, 255 ), FALSE );
-}
-
-void Drawer::drawEffect( int id, const Vector& pos, double size, const Vector& rotate ) const {
-# if EFFECKSEER
-		int handle = PlayEffekseer3DEffect( id );
-		SetScalePlayingEffekseer3DEffect( handle,
-			( float )size, ( float )size, ( float )size );
-		SetRotationPlayingEffekseer3DEffect( handle,
-			( float )rotate.x, ( float )rotate.y, ( float )rotate.z );
-		SetPosPlayingEffekseer3DEffect( handle,
-			( float )pos.x, ( float )pos.y, ( float )pos.z );
-		// Effekseerにより再生中のエフェクトを更新する。
-		UpdateEffekseer3D( );
-
-		// Effekseerにより再生中のエフェクトを描画する。
-		DrawEffekseer3D( );
-#	endif
-}
-
-void Drawer::loadEffect( int id, const char* filename ) {
-#	if EFFECKSEER
-		assert( id < EFFECT_ID_NUM );
-		std::string path = _directory;
-		path += "/";
-		path +=  filename;
-		_effect_id[ id ] = LoadEffekseerEffect( path.c_str( ) );
-		if ( _effect_id[ id ] < 0 ) {
-			path = "../" + path;
-			_effect_id[ id ] = LoadEffekseerEffect( path.c_str( ) );
-			assert( _effect_id[ id ] >= 0 );
-		}
-#	endif
 }
 
 ImagePtr Drawer::createImage( const char* filename ) const {
@@ -214,11 +173,6 @@ void Drawer::setCamera( const Vector& pos, const Vector& target ) {
 	DxLib::VECTOR dx_target = VGet( float( target.x ), float( target.y ), float( target.z ) );
 	DxLib::VECTOR dx_up = VGet( float( _camera_up.x ), float( _camera_up.y ), float( _camera_up.z ) );
 	SetCameraPositionAndTargetAndUpVec( dx_pos, dx_target, dx_up );
-
-#	if EFFECKSEER
-		// DXライブラリのカメラとEffekseerのカメラを同期する。
-		Effekseer_Sync3DSetting();
-#	endif
 }
 
 double Drawer::getFps( ) {

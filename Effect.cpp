@@ -5,29 +5,14 @@
 
 #include <assert.h>
 
-const int PARTICLE = 2000; //Effekseerの最大パーティクル数
+const int PARTICLE = 3000; //Effekseerの最大パーティクル数
 
 EffectPtr Effect::getTask( ) {
 	return std::dynamic_pointer_cast< Effect >( Application::getInstance( )->getTask( getTag( ) ) );
 }
 
-Effect::Effec::Effec( ) :
-id( -1 ),
-handle( -1 ),
-size( -1 ),
-pos( Vector( ) ),
-rotate( Vector( ) ) {
-}
-
-Effect::Effec::Effec( int id_, const Vector& pos_, double size_, const Vector& rotate_ ) :
-id( id_),
-pos( pos_ ),
-size( size_ ),
-rotate( rotate_ ),
-handle( -1 ) {
-}
-
 Effect::Effect( const char * directory ) :
+_handle_num( 0 ),
 _directory( directory ) {
 	// DirectX9を使用するようにする。
 	// Effekseerを使用するには必ず設定する。
@@ -36,9 +21,6 @@ _directory( directory ) {
 
 	// Effekseerを初期化する。
 	// 引数には画面に表示する最大パーティクル数を設定する。
-	//if ( DxLib_Init( ) == -1 ) {
-	//	return;
-	//}
 	if ( Effkseer_Init( PARTICLE ) == -1 ) {
 		return;
 	}
@@ -60,6 +42,10 @@ _directory( directory ) {
 	_effekseer_graph = LoadGraph( path.c_str( ) );
 	assert( _effekseer_graph >= 0 );
 	DrawGraph( 0, 0, _effekseer_graph, TRUE );
+
+	for ( int i = 0; i < MAX_EFFECT_NUM; i++ ) {
+		_handles[ i ] = -1;
+	}
 }
 
 Effect::~Effect( ) {
@@ -69,13 +55,16 @@ void Effect::initialize( ) {
 }
 
 void Effect::finalize( ) {
+	for ( int i = 0; i < _handle_num; i++ ) {
+		DeleteEffekseerEffect( _handles[ _handle_num ] );
+	}
 	Effkseer_End( );
 }
 
 void Effect::update( ) {
 }
 
-int Effect::loadEffect( const char * filename ) const {
+int Effect::loadEffect( const char * filename ) {
 	std::string path = _directory;
 	path += "/";
 	path +=  filename;
@@ -85,6 +74,8 @@ int Effect::loadEffect( const char * filename ) const {
 		result = LoadEffekseerEffect( path.c_str( ) );
 		assert( result >= 0 );
 	}
+	_handles[ _handle_num ] = result;
+	_handle_num = ( _handle_num + 1 ) % MAX_EFFECT_NUM;
 	return result;
 }
 

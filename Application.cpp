@@ -2,11 +2,6 @@
 #include "Binary.h"
 #include "DxLib.h"
 
-#if EFFECKSEER
-	// EffekseerForDXLib.hをインクルードします。
-#	include "EffekseerForDXLib.h"
-#endif
-
 #pragma warning(disable:4099)
 
 const int PARTICLE = 2000; //Effekseerの最大パーティクル数
@@ -41,32 +36,9 @@ Application::Application( ) {
 		SetDoubleStartValidFlag( TRUE ); // 多重起動
 #	endif
 
-#	if EFFECKSEER
-		// DirectX9を使用するようにする。
-		// Effekseerを使用するには必ず設定する。
-		//SetUseDirect3DVersion(DX_DIRECT3D_9);
-		
-		// フルスクリーンウインドウの切り替えでリソースが消えるのを防ぐ。
-		// Effekseerを使用する場合は必ず設定する。
-		SetChangeScreenModeGraphicsSystemResetFlag(FALSE);
-
-		// DXライブラリのデバイスロストした時のコールバックを設定する。
-		// ウインドウとフルスクリーンの切り替えが発生する場合は必ず実行する。
-		Effekseer_SetGraphicsDeviceLostCallbackFunctions();
-#	endif
-
 	if ( DxLib_Init( ) == -1 ) {
 		return;
 	}
-	
-#	if EFFECKSEER
-		// Effekseerを初期化する。
-		// 引数には画面に表示する最大パーティクル数を設定する。
-		if ( Effkseer_Init( 2000 ) == -1 ) {
-			DxLib_End();
-			return;
-		}
-#	endif
 
 	SetUseLighting( FALSE );
 	SetLightEnable( FALSE );
