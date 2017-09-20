@@ -27,6 +27,7 @@ void Movie::draw( ) const {
 
 void Movie::stop( ) {
 	_is_play = false;
+	PauseMovieToGraph( _handle );
 }
 
 void Movie::play( bool is_loop ){
