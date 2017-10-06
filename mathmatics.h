@@ -100,6 +100,15 @@ struct Vector {
 		return *this;
 	}
 
+	// ベクトル同士の積
+	inline Vector product(const Vector& inVector) const {
+			double x1 = x * inVector.x;
+			double x2 = x * inVector.y; 
+			double y1 = y * inVector.x;
+			double y2 = y * inVector.y; 
+
+			return Vector( x1 - y2, x2 + y1, 0 );
+	}
 	// 外積
 	inline Vector cross(const Vector& inVector) const {
 		Vector v1 = (*this).normalize();
